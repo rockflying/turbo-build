@@ -7,7 +7,6 @@
 	<classpathentry kind="src" path="generated/sablecc"/>
 	<classpathentry kind="src" path="generated/singletons"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jasmin"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/heros"/>
 	<classpathentry kind="lib" path="libs/polyglot.jar"/>
 	<classpathentry kind="lib" path="libs/AXMLPrinter2.jar"/>
@@ -17,4 +16,5 @@
 	<classpathentry kind="lib" path="libs/util-2.0.3-dev.jar"/>
 	<classpathentry kind="lib" path="libs/asm-debug-all-5.0.3.jar"/>
 	<classpathentry kind="output" path="classes"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jasmin"/>
 </classpath>
