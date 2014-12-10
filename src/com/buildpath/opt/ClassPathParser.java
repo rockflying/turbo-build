@@ -56,7 +56,7 @@ public class ClassPathParser {
 									// other class path
 						if (expt != null && expt.equals("true")) {
 							File file = new File(classpath);
-							jars.add(file.getParent()+"/"+path);
+							jars.add(file.getParent() + File.separator + path);
 						}
 					} else { //add jars
 						jars.add(path);
@@ -75,17 +75,18 @@ public class ClassPathParser {
 	private void getExtraJars(String proj) {
 		// TODO using the eclipse plug-in to get the workspace
 		// get the workspace directory
-		String workspace = System.getProperty("user.dir") + "/..";
+		String workspace = System.getProperty("user.dir") + File.separator + "..";
 
-		File file = new File(workspace + proj + "/.classpath");
+		String classPath = workspace + proj + File.separator + ".classpath";
+		File file = new File(classPath);
 
 		if (file.exists()) {
-			parseClassPath(workspace + proj + "/.classpath", true);
+			parseClassPath(classPath, true);
 		}
 
 	}
 
-/*	public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		ClassPathParser parser = new ClassPathParser("classpath");
 
@@ -95,5 +96,5 @@ public class ClassPathParser {
 				.hasNext();) {
 			System.out.println(iter.next());
 		}
-	}*/
+	}
 }
