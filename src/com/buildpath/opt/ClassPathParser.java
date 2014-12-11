@@ -55,11 +55,28 @@ public class ClassPathParser {
 					if (exported) { // only consider those exported jars from
 									// other class path
 						if (expt != null && expt.equals("true")) {
-							File file = new File(classpath);
-							jars.add(file.getParent() + File.separator + path);
+							
+							if (new File(path).isAbsolute()) {
+								jars.add(path);
+							} else {
+								File file = new File(classpath);
+								jars.add(file.getParent() + File.separator
+										+ path);
+							}
 						}
+						
 					} else { //add jars
-						jars.add(path);
+						if(path.startsWith("/")) { //depends on jars in other projects
+							String workspace = System.getProperty("user.dir") + File.separator + "..";
+							String jarPath = workspace + path;
+							File file = new File(jarPath);
+
+							if (file.exists()) {
+								jars.add(jarPath);
+							}
+						} else {
+							jars.add(path);
+						}						
 					}
 				} else if(kind.equals("src") && path.startsWith("/")) {//depends on other projects
 					getExtraJars(path);
@@ -83,12 +100,11 @@ public class ClassPathParser {
 		if (file.exists()) {
 			parseClassPath(classPath, true);
 		}
-
 	}
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("classpath");
+		ClassPathParser parser = new ClassPathParser("F:\\xuhao\\temp\\classpath.xml");
 
 		parser.extractJars();
 
