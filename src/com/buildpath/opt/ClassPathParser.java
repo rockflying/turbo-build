@@ -9,6 +9,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import com.buildpath.util.ClasspathEntry;
+
 /**
  * Parse the classpath and get jar list
  *
@@ -20,8 +22,9 @@ public class ClassPathParser {
 	private static final String ENTRY_PATH     = "path";
 	private static final String ENTRY_EXPORTED = "exported";
 	
-	private List<String> jars  = new ArrayList<String>();
-	
+//	private List<String> jars  = new ArrayList<String>();
+	private List<ClasspathEntry> jars = new ArrayList<ClasspathEntry>();
+
 	public ClassPathParser(String buildPath) {
 		this.buildPath = buildPath;
 	}
@@ -29,15 +32,15 @@ public class ClassPathParser {
 	public ClassPathParser() {
 	}
 
-	public List<String> getJars() {
+	public List<ClasspathEntry> getJars() {
 		return jars;
 	}
-
+	
 	public void extractJars() {
-		parseClassPath(buildPath, false);
+		parseClassPath(buildPath, null, false);
 	}
 	
-	private void parseClassPath(String classpath, boolean exported) {
+	private void parseClassPath(String classpath, Element node, boolean exported) {
 		
 		SAXBuilder builder = new SAXBuilder();
 		
@@ -45,23 +48,26 @@ public class ClassPathParser {
 			Document doc = builder.build(classpath);
 			List<Element> list = doc.getRootElement().getChildren();
 
+//			int index = 0;
 			for (Iterator<Element> iter = list.iterator(); iter.hasNext();) {
-				Element node = iter.next();
-				String kind = node.getAttributeValue(ENTRY_KIND);
-				String path = node.getAttributeValue(ENTRY_PATH);
-				String expt = node.getAttributeValue(ENTRY_EXPORTED);
+				Element curNode = iter.next();
+				String kind = curNode.getAttributeValue(ENTRY_KIND);
+				String path = curNode.getAttributeValue(ENTRY_PATH);
+				String expt = curNode.getAttributeValue(ENTRY_EXPORTED);
 
+				ClasspathEntry entry = new ClasspathEntry();
 				if (kind.equals("lib")) {
 					if (exported) { // only consider those exported jars from
 									// other class path
 						if (expt != null && expt.equals("true")) {
 							
 							if (new File(path).isAbsolute()) {
-								jars.add(path);
+								entry.path = path;
+//								jars.add(path);
 							} else {
 								File file = new File(classpath);
-								jars.add(file.getParent() + File.separator
-										+ path);
+								entry.path = file.getParent() + File.separator + path;
+//								jars.add(key);
 							}
 						}
 						
@@ -72,14 +78,28 @@ public class ClassPathParser {
 							File file = new File(jarPath);
 
 							if (file.exists()) {
-								jars.add(jarPath);
+								entry.path = jarPath;
+//								jars.add(jarPath);
 							}
 						} else {
-							jars.add(path);
-						}						
+							entry.path = path;
+						}
 					}
+
+					if (node != null) {
+						entry.element = node;
+					} else {
+						entry.element = curNode;
+					}
+//					entry.index = index;
+					
+					jars.add(entry);
 				} else if(kind.equals("src") && path.startsWith("/")) {//depends on other projects
-					getExtraJars(path);
+					if (node != null) {
+						getExtraJars(path, node);
+					} else {
+						getExtraJars(path, curNode);
+					}					
 				}
 			}
 
@@ -89,7 +109,7 @@ public class ClassPathParser {
 	}
 
 	
-	private void getExtraJars(String proj) {
+	private void getExtraJars(String proj, Element node) {
 		// TODO using the eclipse plug-in to get the workspace
 		// get the workspace directory
 		String workspace = System.getProperty("user.dir") + File.separator + "..";
@@ -98,7 +118,7 @@ public class ClassPathParser {
 		File file = new File(classPath);
 
 		if (file.exists()) {
-			parseClassPath(classPath, true);
+			parseClassPath(classPath, node, true);
 		}
 	}
 
@@ -108,9 +128,10 @@ public class ClassPathParser {
 
 		parser.extractJars();
 
-		for (Iterator<String> iter = parser.getJars().iterator(); iter
+		for (Iterator<ClasspathEntry> iter = parser.getJars().iterator(); iter
 				.hasNext();) {
-			System.out.println(iter.next());
+			ClasspathEntry key = iter.next();
+			System.out.println(key.path + "  " + key.element.getAttributeValue("path"));			
 		}
 	}
 }

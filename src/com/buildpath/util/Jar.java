@@ -9,7 +9,7 @@ public class Jar {
 	String path;
 	String version;
 	String md5;
-	String modifyTime;
+	long modifyTime;
 	List<String> clazzes = new ArrayList<String>();
 	
 	int order; //the order in the build path
@@ -38,7 +38,7 @@ public class Jar {
 		return md5;
 	}
 
-	public String getModifyTime() {
+	public long getModifyTime() {
 		return modifyTime;
 	}
 
