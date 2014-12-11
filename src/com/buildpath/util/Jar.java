@@ -3,6 +3,8 @@ package com.buildpath.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Jar {
 	String name;
@@ -10,15 +12,15 @@ public class Jar {
 	String version;
 	String md5;
 	long modifyTime;
+	boolean absolute;
 	List<String> clazzes = new ArrayList<String>();
 	
 	int order; //the order in the build path
 	
 	boolean valid = false;  //to denote whether the jar is valid
 	
-	public Jar(String path, int order) {
+	public Jar(String path) {
 		this.path  = path;
-		this.order = order;
 		initJar();
 	}
 	
@@ -73,16 +75,31 @@ public class Jar {
 	 * initialize the jar with certain info
 	 */
 	private void initJar() {
-		//check whether is valid
+		// check whether is valid
 		File file = new File(path);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			valid = false;
 			return;
 		}
-		
+
+		if (file.isAbsolute()) {
+			absolute = true;
+		} else {
+			absolute = false;
+		}
+
 		valid = true;
-		md5 = Md5Util.getMd5ByFile(file);  //get the md5
-		
+		md5 = Md5Util.getMd5ByFile(file); // get the md5
+		name = file.getName();
+
+		// suppose that version contains at least one "."
+		Pattern pattern = Pattern.compile("(\\d+(\\.\\d+){1,})");
+		Matcher m = pattern.matcher(name);
+		if (m.find()) {
+			version = m.group(1);
+		} else {
+			version = "unkown";
+		}
 		parseJar();
 	}
 	
@@ -90,6 +107,6 @@ public class Jar {
 		
 	}
 	public static void main(String[] args) {
-		System.out.println(new Jar("", 0).versionCompare("4.1.1", "4.30.15"));
+		System.out.println(new Jar("").versionCompare("4.1.1", "4.30.15"));
 	}
 }

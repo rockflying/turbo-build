@@ -131,7 +131,7 @@ public class ClassPathParser {
 		for (Iterator<ClasspathEntry> iter = parser.getJars().iterator(); iter
 				.hasNext();) {
 			ClasspathEntry key = iter.next();
-			System.out.println(key.path + "  " + key.element.getAttributeValue("path"));			
+			System.out.println(key.path);			
 		}
 	}
 }
