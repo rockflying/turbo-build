@@ -93,7 +93,10 @@ public class ClassPathParser {
 					}
 //					entry.index = index;
 					
-					jars.add(entry);
+					if(entry.path != null) {
+						jars.add(entry);
+					}
+
 				} else if(kind.equals("src") && path.startsWith("/")) {//depends on other projects
 					if (node != null) {
 						getExtraJars(path, node);
@@ -124,14 +127,14 @@ public class ClassPathParser {
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("F:\\xuhao\\temp\\classpath.xml");
+		ClassPathParser parser = new ClassPathParser("E:\\temp\\.classpath");
 
 		parser.extractJars();
 
 		for (Iterator<ClasspathEntry> iter = parser.getJars().iterator(); iter
 				.hasNext();) {
 			ClasspathEntry key = iter.next();
-			System.out.println(key.path);			
+			System.out.println(key.path + " | " + key.element.getAttributeValue("path"));			
 		}
 	}
 }
