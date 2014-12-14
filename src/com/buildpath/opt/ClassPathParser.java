@@ -127,7 +127,7 @@ public class ClassPathParser {
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("E:\\temp\\.classpath");
+		ClassPathParser parser = new ClassPathParser(".classpath");
 
 		parser.extractJars();
 

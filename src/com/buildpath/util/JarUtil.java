@@ -25,7 +25,7 @@ public class JarUtil {
 		Iterator<Jar> iter = jars.iterator();
 		while(iter.hasNext()) {
 			Jar jar = iter.next();
-			str += jar.name + "\t" + jar.version + "\t" + jar.absolute + "\n";
+			str += jar.name + "\t" + jar.version + "\n";
 		}
 		return str;
 	}
