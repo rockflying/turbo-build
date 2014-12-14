@@ -1,8 +1,10 @@
 package com.buildpath.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.buildpath.opt.ClassPathParser;
 
@@ -30,6 +32,23 @@ public class JarUtil {
 		return str;
 	}
 	
+	public void resolveConflict() {
+		Map<String, Jar> map = new HashMap<String, Jar>();
+		
+		Iterator<Jar> iter = jars.iterator();
+		while(iter.hasNext()) {
+			Jar currentJar = iter.next();
+			if(!map.containsKey(currentJar.name)) {
+				map.put(currentJar.name, currentJar);
+				continue;
+			}
+			
+			Jar jar = map.get(currentJar.name);
+			if(jar.compareTo(currentJar) < 0) {
+				
+			}
+		}
+	}
 	public static void main(String[] args) {
 		ClassPathParser parser = new ClassPathParser(".classpath");
 
