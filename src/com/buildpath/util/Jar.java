@@ -120,9 +120,24 @@ public class Jar {
 		if (m.find()) {
 			version = m.group(1);
 		} else {
-			version = "unkown";
+			version = "unknown";
 		}
 		parseJar();
+		
+		//modify jar file name to trim version info
+		name = name.substring(0, name.indexOf(".jar"));
+		
+		if (name.contains(version)) {
+			if (name.endsWith(version)) {
+				name = name.substring(0, name.indexOf(version) - 1);
+			} else {
+				int index = name.indexOf(version);
+
+				name = name.substring(0, index - 1)
+						+ name.substring(index + version.length());
+			}
+		}
+		name = name.toLowerCase();
 	}
 
 	/**
@@ -177,7 +192,11 @@ public class Jar {
 	}
 
 	public static void main(String[] args) {
-		Jar jar = new Jar("E:\\temp\\jdom-2.0.5.jar");
+		//dexlib2-2.0.3-dev.jar
+		//jsoup-1.8.1.jar
+		//java_cup.jar
+		//org.hamcrest.core_1.3.0.jar
+		Jar jar = new Jar("E:\\temp\\dexlib2-2.0.3-dev.jar");
 		System.out.println(jar.toString());
 	}
 }
