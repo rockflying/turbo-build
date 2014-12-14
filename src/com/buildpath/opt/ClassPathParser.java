@@ -23,7 +23,7 @@ public class ClassPathParser {
 	private static final String ENTRY_EXPORTED = "exported";
 	
 //	private List<String> jars  = new ArrayList<String>();
-	private List<ClasspathEntry> jars = new ArrayList<ClasspathEntry>();
+	private List<ClasspathEntry> entries = new ArrayList<ClasspathEntry>();
 
 	public ClassPathParser(String buildPath) {
 		this.buildPath = buildPath;
@@ -32,8 +32,8 @@ public class ClassPathParser {
 	public ClassPathParser() {
 	}
 
-	public List<ClasspathEntry> getJars() {
-		return jars;
+	public List<ClasspathEntry> getEntries() {
+		return entries;
 	}
 	
 	public void extractJars() {
@@ -94,7 +94,7 @@ public class ClassPathParser {
 //					entry.index = index;
 					
 					if(entry.path != null) {
-						jars.add(entry);
+						entries.add(entry);
 					}
 
 				} else if(kind.equals("src") && path.startsWith("/")) {//depends on other projects
@@ -131,7 +131,7 @@ public class ClassPathParser {
 
 		parser.extractJars();
 
-		for (Iterator<ClasspathEntry> iter = parser.getJars().iterator(); iter
+		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
 				.hasNext();) {
 			ClasspathEntry key = iter.next();
 			System.out.println(key.path + " | " + key.element.getAttributeValue("path"));			

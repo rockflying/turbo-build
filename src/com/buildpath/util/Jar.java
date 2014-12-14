@@ -13,6 +13,8 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jdom2.Element;
+
 public class Jar {
 	String name;
 	String path;
@@ -21,6 +23,8 @@ public class Jar {
 	long modifyTime;
 	boolean absolute;
 	List<String> clazzes = new ArrayList<String>();
+	
+	Element element;
 
 	int order; // the order in the build path
 
@@ -29,6 +33,11 @@ public class Jar {
 	public Jar(String path) {
 		this.path = path;
 		initJar();
+	}
+	
+	public Jar(ClasspathEntry entry) {
+		this(entry.path);
+		this.element = entry.element;
 	}
 
 	public String getName() {
