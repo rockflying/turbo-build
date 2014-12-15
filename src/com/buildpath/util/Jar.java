@@ -67,8 +67,20 @@ public class Jar {
 	public boolean isValid() {
 		return valid;
 	}
+	
+	public Element getElement() {
+		return element;
+	}
 
 	public int compareTo(Jar jar) {
+
+		if(md5.equals(jar.md5)) {
+			return 0;
+		}
+		
+		if(version.equals("unknown") || jar.getVersion().equals("unknown")) {
+			return (int)(modifyTime - jar.modifyTime);
+		}
 		return versionCompare(version, jar.getVersion());
 	}
 
@@ -200,12 +212,12 @@ public class Jar {
 		}
 	}
 
-	public static void main(String[] args) {
-		//dexlib2-2.0.3-dev.jar
-		//jsoup-1.8.1.jar
-		//java_cup.jar
-		//org.hamcrest.core_1.3.0.jar
-		Jar jar = new Jar("E:\\temp\\dexlib2-2.0.3-dev.jar");
-		System.out.println(jar.toString());
-	}
+//	public static void main(String[] args) {
+//		//dexlib2-2.0.3-dev.jar
+//		//jsoup-1.8.1.jar
+//		//java_cup.jar
+//		//org.hamcrest.core_1.3.0.jar
+//		Jar jar = new Jar("dexlib2-2.0.3-dev.jar");
+//		System.out.println(jar.toString());
+//	}
 }
