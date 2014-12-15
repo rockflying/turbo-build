@@ -22,6 +22,8 @@ public class ClassPathParser {
 	private static final String ENTRY_PATH     = "path";
 	private static final String ENTRY_EXPORTED = "exported";
 	
+	private Document document;
+	
 //	private List<String> jars  = new ArrayList<String>();
 	private List<ClasspathEntry> entries = new ArrayList<ClasspathEntry>();
 
@@ -40,12 +42,21 @@ public class ClassPathParser {
 		parseClassPath(buildPath, null, false);
 	}
 	
+	public Document getDocument() {
+		return document;
+	}
+
 	private void parseClassPath(String classpath, Element node, boolean exported) {
 		
 		SAXBuilder builder = new SAXBuilder();
 		
 		try {
 			Document doc = builder.build(classpath);
+			
+			if(!exported) {
+				this.document = doc;
+			}
+			
 			List<Element> list = doc.getRootElement().getChildren();
 
 //			int index = 0;
@@ -125,16 +136,16 @@ public class ClassPathParser {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		ClassPathParser parser = new ClassPathParser(".classpath");
-
-		parser.extractJars();
-
-		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
-				.hasNext();) {
-			ClasspathEntry key = iter.next();
-			System.out.println(key.path + " | " + key.element.getAttributeValue("path"));			
-		}
-	}
+//	public static void main(String[] args) {
+//
+//		ClassPathParser parser = new ClassPathParser(".classpath");
+//
+//		parser.extractJars();
+//
+//		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
+//				.hasNext();) {
+//			ClasspathEntry key = iter.next();
+//			System.out.println(key.path + " | " + key.element.getAttributeValue("path"));			
+//		}
+//	}
 }
