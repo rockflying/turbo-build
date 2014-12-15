@@ -74,14 +74,14 @@ public class Jar {
 
 	public int compareTo(Jar jar) {
 
-		if(md5.equals(jar.md5)) {
+		if (md5.equals(jar.md5)) {
 			return 0;
 		}
-		
-		if(version.equals("unknown") || jar.getVersion().equals("unknown")) {
-			return (int)(modifyTime - jar.modifyTime);
+
+		if (version.equals("unknown") || jar.getVersion().equals("unknown")) {
+			return (int) (jar.modifyTime - modifyTime);
 		}
-		return versionCompare(version, jar.getVersion());
+		return versionCompare(jar.getVersion(), version);
 	}
 
 	

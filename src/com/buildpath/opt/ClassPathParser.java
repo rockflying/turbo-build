@@ -136,16 +136,16 @@ public class ClassPathParser {
 		}
 	}
 
-//	public static void main(String[] args) {
-//
-//		ClassPathParser parser = new ClassPathParser(".classpath");
-//
-//		parser.extractJars();
-//
-//		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
-//				.hasNext();) {
-//			ClasspathEntry key = iter.next();
-//			System.out.println(key.path + " | " + key.element.getAttributeValue("path"));			
-//		}
-//	}
+	public static void main(String[] args) {
+
+		ClassPathParser parser = new ClassPathParser(".classpath");
+
+		parser.extractJars();
+
+		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
+				.hasNext();) {
+			ClasspathEntry key = iter.next();
+			System.out.println(key.path);			
+		}
+	}
 }
