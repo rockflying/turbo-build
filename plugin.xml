@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="com.turbo.build.contribution"
+            objectClass="org.eclipse.core.resources.IResource">
+            <action
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               enablesFor="1"
+               id="com.turbo.build.OptimizeAction"
+               label="Optimize Build Path"
+               menubarPath="additions">
+         	</action>
+      </objectContribution>
+   </extension>
+
+</plugin>

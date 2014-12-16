@@ -142,10 +142,9 @@ public class ClassPathParser {
 
 		parser.extractJars();
 
-		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter
-				.hasNext();) {
+		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
 			ClasspathEntry key = iter.next();
-			System.out.println(key.path);			
+			System.out.println(key.path);
 		}
 	}
 }
