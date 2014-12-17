@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -84,8 +86,9 @@ public class ClassPathParser {
 						
 					} else { //add jars
 						if(path.startsWith("/")) { //depends on jars in other projects
-							String workspace = System.getProperty("user.dir") + File.separator + "..";
-							String jarPath = workspace + path;
+							String proj = path.substring(1, path.indexOf("/", 1));
+							String projPath = getProjectLocation(proj);
+							String jarPath = projPath + path.substring(path.indexOf("/", 1));
 							File file = new File(jarPath);
 
 							if (file.exists()) {
@@ -123,12 +126,14 @@ public class ClassPathParser {
 	}
 
 	
-	private void getExtraJars(String proj, Element node) {
+	private void getExtraJars(String path, Element node) {
 		// TODO using the eclipse plug-in to get the workspace
 		// get the workspace directory
-		String workspace = System.getProperty("user.dir") + File.separator + "..";
+		String proj = path.substring(1);
+		
+		String workspace = getProjectLocation(proj) + File.separator;
 
-		String classPath = workspace + proj + File.separator + ".classpath";
+		String classPath = workspace + ".classpath";
 		File file = new File(classPath);
 
 		if (file.exists()) {
@@ -136,6 +141,10 @@ public class ClassPathParser {
 		}
 	}
 
+	private String getProjectLocation(String proj) {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		return root.getProject(proj).getLocation().toString();
+	}
 	public static void main(String[] args) {
 
 		ClassPathParser parser = new ClassPathParser(".classpath");

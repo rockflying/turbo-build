@@ -1,9 +1,9 @@
 package com.turbo.build.popup.actions;
 
-import org.eclipse.core.resources.IProject;
+import java.io.File;
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -11,6 +11,8 @@ import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
+import com.turbo.build.opt.ClassPathParser;
+import com.turbo.build.util.ClasspathEntry;
 import com.turbo.build.util.Console;
 
 public class OptimizeAction implements IObjectActionDelegate {
@@ -19,7 +21,7 @@ public class OptimizeAction implements IObjectActionDelegate {
 	
 	private ISelection selection;
 	/**
-	 * Constructor for Action1.
+	 * Constructor for OptimizeAction.
 	 */
 	public OptimizeAction() {
 		super();
@@ -41,9 +43,9 @@ public class OptimizeAction implements IObjectActionDelegate {
 //			"BuildPathTurbo",
 //			"New Action was executed.");
 //		System.out.println("Finding conflict jars");
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IProject[] projects = root.getProjects();
-		Console.println(projects.length);
+//		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//		IProject[] projects = root.getProjects();
+//		Console.println(projects.length);
 		
 //		for(int i = 0; i < projects.length; ++i) {
 //			Console.println(projects[i].getLocation());
@@ -54,8 +56,15 @@ public class OptimizeAction implements IObjectActionDelegate {
 //		Console.println(selection.toString());
 		
 		Object element = ((IStructuredSelection)selection).getFirstElement();
-		if(element instanceof IResource) {
-			Console.println(((IResource)element).getProject().getLocation());
+		
+		ClassPathParser parser = new ClassPathParser(((IResource) element)
+				.getProject().getLocation() + File.separator + ".classpath");
+
+		parser.extractJars();
+
+		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
+			ClasspathEntry key = iter.next();
+			Console.println(key.path);
 		}
 	}
 
