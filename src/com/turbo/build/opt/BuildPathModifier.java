@@ -1,4 +1,4 @@
-package com.buildpath.opt;
+package com.turbo.build.opt;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import com.buildpath.util.Jar;
-import com.buildpath.util.JarUtil;
+import com.turbo.build.util.Jar;
+import com.turbo.build.util.JarUtil;
 
 public class BuildPathModifier {
 

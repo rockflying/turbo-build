@@ -1,4 +1,4 @@
-package com.buildpath.opt;
+package com.turbo.build.opt;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import com.buildpath.util.ClasspathEntry;
+import com.turbo.build.util.ClasspathEntry;
 
 /**
  * Parse the classpath and get jar list
