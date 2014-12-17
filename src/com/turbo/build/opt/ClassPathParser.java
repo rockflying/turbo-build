@@ -145,15 +145,15 @@ public class ClassPathParser {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		return root.getProject(proj).getLocation().toString();
 	}
-	public static void main(String[] args) {
-
-		ClassPathParser parser = new ClassPathParser(".classpath");
-
-		parser.extractJars();
-
-		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
-			ClasspathEntry key = iter.next();
-			System.out.println(key.path);
-		}
-	}
+//	public static void main(String[] args) {
+//
+//		ClassPathParser parser = new ClassPathParser(".classpath");
+//
+//		parser.extractJars();
+//
+//		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
+//			ClasspathEntry key = iter.next();
+//			System.out.println(key.path);
+//		}
+//	}
 }
