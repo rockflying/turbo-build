@@ -1,17 +1,18 @@
 package com.turbo.build.opt;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.swt.graphics.Color;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import com.turbo.build.util.Console;
 import com.turbo.build.util.Jar;
 import com.turbo.build.util.JarUtil;
 
@@ -50,20 +51,17 @@ public class BuildPathModifier {
 		}
 		
 		//output the optimized class path
+		Console.println("Optimized classpath:", new Color(null, 255, 0, 0));
+		
 		Format format = Format.getCompactFormat();
-		format.setEncoding("utf-8");
+		format.setEncoding("UTF-8");
 		format.setIndent("    ");
 		XMLOutputter out=new XMLOutputter(format);
 		try {
-			out.output(doc,new FileOutputStream("E:\\Temp\\classpath.xml"));
+			out.output(doc, Console.getConsole().newMessageStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 	}
 }

@@ -1,5 +1,6 @@
 package com.turbo.build.util;
 
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -25,7 +26,14 @@ public class Console {
 	}
 	
 	public static void println(String msg) {
-		MessageConsoleStream printer = console.newMessageStream();  
+		MessageConsoleStream printer = console.newMessageStream();
+		printer.setActivateOnWrite(true);
+		printer.println(msg);
+	}
+	
+	public static void println(String msg, Color color) {
+		MessageConsoleStream printer = console.newMessageStream();
+		printer.setColor(color);
 		printer.setActivateOnWrite(true);
 		printer.println(msg);
 	}
@@ -36,5 +44,9 @@ public class Console {
 	
 	public static void println(Object obj) {
 		println(obj.toString());
+	}
+	
+	public static MessageConsole getConsole() {
+		return console;
 	}
 }
