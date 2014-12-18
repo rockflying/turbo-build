@@ -16,11 +16,17 @@ import com.turbo.build.util.Jar;
 import com.turbo.build.util.JarUtil;
 
 public class BuildPathModifier {
+	
+	private String classpath;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ClassPathParser parser = new ClassPathParser(".classpath");
+	public BuildPathModifier(String classpath) {
+		this.classpath = classpath;
+	}
 
+	public void optimizeBuildPath() {
+		
+		ClassPathParser parser = new ClassPathParser(classpath);
+		
 		parser.extractJars();
 		
 		JarUtil jutil = new JarUtil(parser.getEntries());
@@ -28,13 +34,13 @@ public class BuildPathModifier {
 		jutil.resolveConflict();
 		
 		Map<String, List<Jar>> jarMap = jutil.getConflictJars();
-
+		
 		Document doc = parser.getDocument();
 		Element root = doc.getRootElement();
 		
 		Set<String> keys = jarMap.keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-
+			
 			List<Jar> list = jarMap.get(iter.next());
 			for (Iterator<Jar> iter2 = list.iterator(); iter2.hasNext();) {
 				Element node = iter2.next().getElement();
@@ -48,11 +54,16 @@ public class BuildPathModifier {
 		format.setEncoding("utf-8");
 		format.setIndent("    ");
 		XMLOutputter out=new XMLOutputter(format);
-        try {
+		try {
 			out.output(doc,new FileOutputStream("E:\\Temp\\classpath.xml"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 	}
 }

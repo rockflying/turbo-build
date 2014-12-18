@@ -1,23 +1,22 @@
 package com.turbo.build.popup.actions;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import com.turbo.build.opt.ClassPathParser;
-import com.turbo.build.util.ClasspathEntry;
-import com.turbo.build.util.Console;
+import com.turbo.build.opt.BuildPathModifier;
 
 public class OptimizeAction implements IObjectActionDelegate {
 
-//	private Shell shell;
+	private Shell shell;
 	
 	private ISelection selection;
 	/**
@@ -31,7 +30,7 @@ public class OptimizeAction implements IObjectActionDelegate {
 	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
 	 */
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-//		shell = targetPart.getSite().getShell();
+		shell = targetPart.getSite().getShell();
 	}
 
 	/**
@@ -57,15 +56,18 @@ public class OptimizeAction implements IObjectActionDelegate {
 		
 		Object element = ((IStructuredSelection)selection).getFirstElement();
 		
-		ClassPathParser parser = new ClassPathParser(((IResource) element)
-				.getProject().getLocation() + File.separator + ".classpath");
-
-		parser.extractJars();
-
-		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
-			ClasspathEntry key = iter.next();
-			Console.println(key.path);
+		String classpath = ((IResource) element).getProject().getLocation()
+				+ File.separator + ".classpath";
+		
+		File file = new File(classpath);
+		if(!file.exists()) {
+			MessageDialog.openInformation(shell, "Build Path Turbo",
+					".classpath does not exist");
+			return;
 		}
+		
+		BuildPathModifier buildPath = new BuildPathModifier(classpath);
+		buildPath.optimizeBuildPath();
 	}
 
 	/**
