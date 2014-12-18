@@ -96,7 +96,8 @@ public class ClassPathParser {
 //								jars.add(jarPath);
 							}
 						} else {
-							entry.path = path;
+							File file = new File(classpath);
+							entry.path = file.getParent() + File.separator + path;
 						}
 					}
 

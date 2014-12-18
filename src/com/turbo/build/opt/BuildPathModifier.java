@@ -39,6 +39,21 @@ public class BuildPathModifier {
 		Document doc = parser.getDocument();
 		Element root = doc.getRootElement();
 		
+		//output the original class path
+		Console.println("Original classpath:", new Color(null, 255, 0, 0));
+		
+		Format format = Format.getCompactFormat();
+		format.setEncoding("UTF-8");
+		format.setIndent("    ");
+		XMLOutputter out=new XMLOutputter(format);
+		try {
+			out.output(doc, Console.getConsole().newMessageStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//optimize the build path
 		Set<String> keys = jarMap.keySet();
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
 			
@@ -53,10 +68,7 @@ public class BuildPathModifier {
 		//output the optimized class path
 		Console.println("Optimized classpath:", new Color(null, 255, 0, 0));
 		
-		Format format = Format.getCompactFormat();
-		format.setEncoding("UTF-8");
-		format.setIndent("    ");
-		XMLOutputter out=new XMLOutputter(format);
+		
 		try {
 			out.output(doc, Console.getConsole().newMessageStream());
 		} catch (IOException e) {
