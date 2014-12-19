@@ -12,6 +12,7 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import com.turbo.build.util.ClasspathEntry;
+import com.turbo.build.util.Console;
 
 /**
  * Parse the classpath and get jar list
@@ -96,8 +97,12 @@ public class ClassPathParser {
 //								jars.add(jarPath);
 							}
 						} else {
-							File file = new File(classpath);
-							entry.path = file.getParent() + File.separator + path;
+							if (new File(path).isAbsolute()) {
+								entry.path = path;
+							} else {
+								File file = new File(classpath);
+								entry.path = file.getParent() + File.separator + path;
+							}
 						}
 					}
 
@@ -122,6 +127,7 @@ public class ClassPathParser {
 			}
 
 		} catch (Exception ex) {
+			Console.println(ex.toString());
 			ex.printStackTrace();
 		}
 	}
