@@ -40,7 +40,7 @@ public class BuildPathModifier {
 		Element root = doc.getRootElement();
 		
 		//output the original class path
-		Console.println("Original classpath:", new Color(null, 255, 0, 0));
+		Console.println("Original classpath:\n", new Color(null, 255, 0, 0));
 		
 		Format format = Format.getCompactFormat();
 		format.setEncoding("UTF-8");
@@ -55,18 +55,31 @@ public class BuildPathModifier {
 		
 		//optimize the build path
 		Set<String> keys = jarMap.keySet();
+		
+		if(keys.size() > 0) {
+			Console.println("\nJars that may conflict:\n", new Color(null, 255, 0, 0));
+		} else {
+			Console.println("\nThere are not conflict jars.\n", new Color(null, 255, 0, 0));
+		}
+		
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-			
-			List<Jar> list = jarMap.get(iter.next());
+			String name = iter.next();
+			Console.println(">>> jar: " + name + " <<<", new Color(null, 255, 0, 0));
+			List<Jar> list = jarMap.get(name);
 			for (Iterator<Jar> iter2 = list.iterator(); iter2.hasNext();) {
-				Element node = iter2.next().getElement();
+				Jar jar = iter2.next();
+				Element node = jar.getElement();
+				
+				Console.println("    "+node.getAttributeValue("path"), new Color(null, 255, 0, 0));
+				Console.println("        "+ jar.getPath());
+				
 				root.removeContent(node);
 				root.addContent(node.detach());
 			}
 		}
 		
 		//output the optimized class path
-		Console.println("Optimized classpath:", new Color(null, 255, 0, 0));
+		Console.println("\nOptimized classpath:\n", new Color(null, 255, 0, 0));
 		
 		
 		try {
