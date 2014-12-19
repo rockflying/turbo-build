@@ -59,7 +59,7 @@ public class BuildPathModifier {
 		if(keys.size() > 0) {
 			Console.println("\nJars that may conflict:\n", new Color(null, 255, 0, 0));
 		} else {
-			Console.println("\nThere are not conflict jars.\n", new Color(null, 255, 0, 0));
+			Console.println("\nThere are not conflict jars.", new Color(null, 255, 0, 0));
 		}
 		
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
@@ -79,7 +79,7 @@ public class BuildPathModifier {
 		}
 		
 		//output the optimized class path
-		Console.println("\nOptimized classpath:\n", new Color(null, 255, 0, 0));
+		Console.println("\nResult classpath:\n", new Color(null, 255, 0, 0));
 		
 		
 		try {
