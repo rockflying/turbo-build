@@ -13,6 +13,7 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import com.turbo.build.opt.BuildPathModifier;
+import com.turbo.build.util.Console;
 
 public class OptimizeAction implements IObjectActionDelegate {
 
@@ -53,6 +54,7 @@ public class OptimizeAction implements IObjectActionDelegate {
 //		
 //		Console.println(root.getProject("test").getLocation());
 //		Console.println(selection.toString());
+		Console.clearConsole();
 		
 		Object element = ((IStructuredSelection)selection).getFirstElement();
 		

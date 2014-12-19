@@ -1,5 +1,7 @@
 package com.turbo.build.util;
 
+import java.io.IOException;
+
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
@@ -29,6 +31,13 @@ public class Console {
 		MessageConsoleStream printer = console.newMessageStream();
 		printer.setActivateOnWrite(true);
 		printer.println(msg);
+		try {
+			printer.flush();
+			printer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void println(String msg, Color color) {
@@ -36,6 +45,13 @@ public class Console {
 		printer.setColor(color);
 		printer.setActivateOnWrite(true);
 		printer.println(msg);
+		try {
+			printer.flush();
+			printer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void println(int msg) {
@@ -48,5 +64,9 @@ public class Console {
 	
 	public static MessageConsole getConsole() {
 		return console;
+	}
+	
+	public static void clearConsole() {
+		console.clearConsole();
 	}
 }
