@@ -99,6 +99,15 @@ public class Jar {
 
 	private int versionCompare(String ver1, String ver2) {
 		int res = Integer.MIN_VALUE;
+		
+		if (ver1.toLowerCase().startsWith("v")) {
+			ver1 = ver1.substring(1);
+		}
+
+		if (ver2.toLowerCase().startsWith("v")) {
+			ver2 = ver2.substring(1);
+		}
+		
 		String[] v1 = ver1.split("\\.");
 		String[] v2 = ver2.split("\\.");
 
@@ -143,6 +152,15 @@ public class Jar {
 		} else {
 			version = "unknown";
 		}
+		
+		if(version.equals("unknown")) {   // deal with jar name like  xxx-v1.jar
+			pattern = Pattern.compile("(v(\\d+){1,})");
+			m = pattern.matcher(name);
+			if (m.find()) {
+				version = m.group(1);
+			}
+		}
+		
 		parseJar();
 		
 		//modify jar file name to trim version info

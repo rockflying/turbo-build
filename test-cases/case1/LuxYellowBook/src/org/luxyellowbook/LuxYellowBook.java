@@ -22,7 +22,7 @@ public class LuxYellowBook
 		}
 		else if (name.equals("Philharmonie"))
 		{
-			rtStr = "1, place de l’Europe, 1499 Luxembourg City, Luxembourg" + "\n" + "+352-260227-1";
+			rtStr = "1, place de l'Europe, 1499 Luxembourg City, Luxembourg" + "\n" + "+352-260227-1";
 		}
 		
 		return rtStr;
