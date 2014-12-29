@@ -1,0 +1,35 @@
+Case1: A very simple test case for library conflicts
+
+For project YelloBook, it relies on LuxYellowBook and mudam-lib-v2 while LuxYellowBook relies on mudam-lib-v1.
+mudam-lib-v2 is a later version of mudam-lib-v1.
+But unfortunately mudam-lib-v2 does not backward compatibility.
+
+More specifically, if we the build path of YellowBook is as follows:
+
+<classpath>
+    <classpathentry kind="src" path="src" />
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7" />
+    <classpathentry kind="lib" path="lib/mudam-lib-v2.jar" />
+    <classpathentry kind="lib" path="lib/luxyellowbook.jar" />
+    <classpathentry kind="output" path="bin" />
+</classpath>
+
+When we launch YellowBook, it will generate the next exception:
+
+Exception in thread "main" java.lang.NoSuchMethodError: org.mudam.Mudam.getAddress()Ljava/lang/String;
+	at org.luxyellowbook.LuxYellowBook.getAddress(LuxYellowBook.java:21)
+	at org.yellowbook.YellowBook.main(YellowBook.java:10)
+
+However, if we change the build path of YellowBook to the following one:
+<classpath>
+    <classpathentry kind="src" path="src" />
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7" />
+    <classpathentry kind="lib" path="lib/luxyellowbook.jar" />
+    <classpathentry kind="lib" path="lib/mudam-lib-v2.jar" />
+    <classpathentry kind="output" path="bin" />
+</classpath>
+
+The exception would be solved.
+
+Although this case is very simple, it does illustrate the classic situation of NoSuchMethodError problem.
+This plugin should be able to detect and automatically solve this problem.
