@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: BuildPathTurbo
 Bundle-SymbolicName: com.turbo.build;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Bundle-Activator: com.turbo.build.Activator
 Bundle-Vendor: TURBO
 Require-Bundle: org.eclipse.ui,
