@@ -2,6 +2,7 @@ package com.turbo.build.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Jar {
 	String md5;
 	long modifyTime;
 	boolean absolute;
-	List<String> clazzes = new ArrayList<String>();
+	List<Clazz> clazzes = new ArrayList<Clazz>();
 	
 	Element element;
 
@@ -185,9 +186,11 @@ public class Jar {
 	private void parseJar() {
 		final String[] vers = { "Implementation-Version", "Bundle-Version" };
 		File file = new File(path);
+		
 
 		try {
 			JarFile jar = new JarFile(file);
+			JarClassLoader loader = new JarClassLoader(new URL[]{});
 
 			if (version == "unknown") {
 				Manifest manifest = jar.getManifest();
@@ -199,7 +202,7 @@ public class Jar {
 						break;
 					}
 				}
-				
+
 				// the version is still unknown
 				if (version == "unknown") {
 					Map<String, Attributes> entries = manifest.getEntries();
@@ -213,29 +216,32 @@ public class Jar {
 				}
 			}
 			
+			loader.addJar(file.toURI().toURL());
 			Enumeration<JarEntry> files = jar.entries();
 			while (files.hasMoreElements()) {
 				JarEntry entry = files.nextElement();
 				
 				if (entry.toString().endsWith(".class")) {
 //					System.out.println(entry);
-					clazzes.add(entry.toString());
-				}		
+					clazzes.add(new Clazz(loader, entry.getName().replaceAll("/", ".")
+							.replace(".class", "")));
+				}
 			}
 			
 			jar.close();
+			loader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-//	public static void main(String[] args) {
-//		//dexlib2-2.0.3-dev.jar
-//		//jsoup-1.8.1.jar
-//		//java_cup.jar
-//		//org.hamcrest.core_1.3.0.jar
-//		Jar jar = new Jar("dexlib2-2.0.3-dev.jar");
-//		System.out.println(jar.toString());
-//	}
+	public static void main(String[] args) {
+		//dexlib2-2.0.3-dev.jar
+		//jsoup-1.8.1.jar
+		//java_cup.jar
+		//org.hamcrest.core_1.3.0.jar
+		Jar jar = new Jar("F:/Temp/mudam-lib-v2.jar");
+		System.out.println(jar.toString());
+	}
 }
