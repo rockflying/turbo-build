@@ -6,8 +6,10 @@ import java.lang.reflect.Method;
 public class Clazz {
 	private Method[] methods;
 	private Field [] fields;
+	private String   name;
 	
 	public Clazz(JarClassLoader loader, String strclazz) {
+		name = strclazz;
 		try {
 			Class<?> clazz = loader.loadClass(strclazz);
 //			System.out.println(clazz.getMethods());
@@ -33,5 +35,9 @@ public class Clazz {
 	
 	public int getFieldCount() {
 		return fields.length;
+	}
+
+	public String getName() {
+		return name;
 	}
 }
