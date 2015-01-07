@@ -106,4 +106,24 @@ public class JarUtil {
 	public Map<String, List<Jar>> getConflictJars() {
 		return conflictJars;
 	}
+	
+	public void findConflictJars() {
+		Map<String, Jar> map = new HashMap<String, Jar>();
+		Iterator<Jar> iter = jars.iterator();  //all jars in the build path
+		while(iter.hasNext()) {
+			System.out.println("--------------------");
+			Jar jar = iter.next();
+			List<Clazz> clazzList = jar.getClazzes();
+			for(Clazz clazz : clazzList) {
+				String key = clazz.getName();
+				if(map.containsKey(key)) {
+					System.out.println("Conflict class: " + key);
+					System.out.println("\t>> " + jar.getElement().getAttributeValue("path"));
+					System.out.println("\t>> " + map.get(key).getElement().getAttributeValue("path"));
+				} else {
+					map.put(clazz.getName(), jar);
+				}
+			}
+		}
+	}
 }

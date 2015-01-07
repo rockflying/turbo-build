@@ -2,6 +2,8 @@ package com.turbo.build.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -240,25 +242,25 @@ public class Jar {
 		return clazzes;
 	}
 
-//	public static void main(String[] args) {
-//		//dexlib2-2.0.3-dev.jar
-//		//jsoup-1.8.1.jar
-//		//java_cup.jar
-//		//org.hamcrest.core_1.3.0.jar
-//		Jar jar = new Jar("F:/Temp/mudam-lib-v2.jar");
-////		System.out.println(jar.toString());
-//		
-//		for(Clazz clazz : jar.getClazzes()) {
-//			System.out.println(clazz.getName());
-//			
-//			for(Method m : clazz.getMethods()) {
-//				System.out.println(m.getDeclaringClass()+"."+m.getName());
-//				System.out.println(m);
-//			}
-//			
-//			for(Field field : clazz.getFields()) {
-//				System.out.println(field);
-//			}
-//		}
-//	}
+	public static void main(String[] args) {
+		//dexlib2-2.0.3-dev.jar
+		//jsoup-1.8.1.jar
+		//java_cup.jar
+		//org.hamcrest.core_1.3.0.jar
+		Jar jar = new Jar("F:/Temp/mudam-lib-v2.jar");
+//		System.out.println(jar.toString());
+		
+		for(Clazz clazz : jar.getClazzes()) {
+			System.out.println(clazz.getName());
+			
+			for(Method m : clazz.getMethods()) {
+				System.out.println(m.getDeclaringClass()+"."+m.getName());
+				System.out.println(m);
+			}
+			
+			for(Field field : clazz.getFields()) {
+				System.out.println(field);
+			}
+		}
+	}
 }
