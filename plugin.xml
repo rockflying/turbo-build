@@ -8,13 +8,49 @@
             adaptable="true"
             id="com.turbo.build.contribution"
             objectClass="org.eclipse.core.resources.IResource">
-            <action
-               class="com.turbo.build.popup.actions.OptimizeAction"
-               enablesFor="1"
-               id="com.turbo.build.OptimizeAction"
+        <menu
                label="Optimize Build Path"
-               menubarPath="additions">
-         	</action>
+               path="additions"
+               id="turbo.menu">
+            <separator
+                  name="group">
+            </separator>
+         </menu>
+         <action
+               label="Recovery"
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.recovery">
+         </action>
+         <action
+               label="Resolve Conflict(JarCombining)"
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.resolve3">
+         </action>
+         <action
+               label="Resolve Conflict(JarRefactoring)"
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.resolve2">
+         </action>
+         <action
+               label="Resolve Conflict(Simple)"
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.resolve1">
+         </action>
+         <action
+               label="Check Conflict"
+               class="com.turbo.build.popup.actions.OptimizeAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.check">
+         </action>
       </objectContribution>
    </extension>
 
