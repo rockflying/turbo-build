@@ -156,6 +156,7 @@ public class ClassPathParser {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		return root.getProject(proj).getLocation().toString();
 	}
+
 	public static void main(String[] args) {
 
 		ClassPathParser parser = new ClassPathParser("F:\\workspace\\com.turbo.build\\test-cases\\case1\\YellowBook\\.classpath");
@@ -169,7 +170,7 @@ public class ClassPathParser {
 //		}
 		
 		JarUtil util = new JarUtil(parser.getEntries());
-		System.out.println(util);
+//		System.out.println(util);
 		
 		util.resolveConflict();
 		
@@ -177,7 +178,7 @@ public class ClassPathParser {
 		
 		Set<String> keys = jarMap.keySet();
 		
-		System.out.println(keys.size());
+//		System.out.println(keys.size());
 		
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
 			String name = iter.next();
