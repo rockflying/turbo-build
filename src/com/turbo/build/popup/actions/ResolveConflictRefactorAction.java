@@ -15,7 +15,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import com.turbo.build.opt.BuildPathModifier;
 import com.turbo.build.util.Console;
 
-public class OptimizeAction implements IObjectActionDelegate {
+public class ResolveConflictRefactorAction implements IObjectActionDelegate {
 
 	private Shell shell;
 	
@@ -23,7 +23,7 @@ public class OptimizeAction implements IObjectActionDelegate {
 	/**
 	 * Constructor for OptimizeAction.
 	 */
-	public OptimizeAction() {
+	public ResolveConflictRefactorAction() {
 		super();
 	}
 

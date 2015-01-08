@@ -18,35 +18,35 @@
          </menu>
          <action
                label="Recovery"
-               class="com.turbo.build.popup.actions.OptimizeAction"
+               class="com.turbo.build.popup.actions.RecoverBuildPathAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.recovery">
          </action>
          <action
                label="Resolve Conflict(JarCombining)"
-               class="com.turbo.build.popup.actions.OptimizeAction"
+               class="com.turbo.build.popup.actions.ResolveConflictCombineAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.resolve3">
          </action>
          <action
                label="Resolve Conflict(JarRefactoring)"
-               class="com.turbo.build.popup.actions.OptimizeAction"
+               class="com.turbo.build.popup.actions.ResolveConflictRefactorAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.resolve2">
          </action>
          <action
                label="Resolve Conflict(Simple)"
-               class="com.turbo.build.popup.actions.OptimizeAction"
+               class="com.turbo.build.popup.actions.ResolveConflictSimpleAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.resolve1">
          </action>
          <action
                label="Check Conflict"
-               class="com.turbo.build.popup.actions.OptimizeAction"
+               class="com.turbo.build.popup.actions.CheckConflictAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.check">
