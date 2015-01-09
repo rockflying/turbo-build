@@ -107,25 +107,46 @@ public class JarUtil {
 		return conflictJars;
 	}
 	
-	public void findConflictJars() {
+	public Map<String, ArrayList<Jar>> findConflictJars() {
 		Map<String, Jar> map = new HashMap<String, Jar>();
+		Map<String, ArrayList<Jar>> confMap = new HashMap<String, ArrayList<Jar>>();
 		Iterator<Jar> iter = jars.iterator();  //all jars in the build path
-		
+
 		while(iter.hasNext()) {
 			Jar jar = iter.next();
 			List<Clazz> clazzList = jar.getClazzes();
-			
+
 			for(Clazz clazz : clazzList) {
 				String key = clazz.getName();
 				
 				if(map.containsKey(key)) {
-					System.out.println("Conflict class: " + key);
-					System.out.println("\t>> " + jar.getElement().getAttributeValue("path"));
-					System.out.println("\t>> " + map.get(key).getElement().getAttributeValue("path"));
+//					System.out.println("Conflict class: " + key);
+//					System.out.println("\t>> " + jar.getElement().getAttributeValue("path"));
+//					System.out.println("\t>> " + map.get(key).getElement().getAttributeValue("path"));
+					if(confMap.containsKey(key)) {
+						confMap.get(key).add(jar);
+					} else {
+						ArrayList<Jar> jarList = new ArrayList<Jar>();
+						jarList.add(map.get(key));
+						jarList.add(jar);
+						confMap.put(key, jarList);
+					}
 				} else {
 					map.put(clazz.getName(), jar);
 				}
 			}
 		}
+
+		Iterator<String>mapIter = confMap.keySet().iterator();
+		while(mapIter.hasNext()) {
+			String key = mapIter.next();
+			System.out.println(key);
+			ArrayList<Jar> list = confMap.get(key);
+			for(Jar jar : list) {
+				System.out.println("  >>> "+jar.getElement().getAttributeValue("path"));
+			}
+		}
+
+		return confMap;
 	}
 }

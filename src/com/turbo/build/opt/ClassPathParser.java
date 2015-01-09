@@ -159,7 +159,7 @@ public class ClassPathParser {
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("F:\\workspace\\com.turbo.build\\test-cases\\case1\\YellowBook\\.classpath");
+		ClassPathParser parser = new ClassPathParser("F:\\workspace\\com.turbo.build\\test-cases\\case2\\App\\.classpath");
 //		ClassPathParser parser = new ClassPathParser("F:\\workspace\\soot\\.classpath");
 
 		parser.extractJars();
