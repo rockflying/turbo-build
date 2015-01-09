@@ -22,5 +22,4 @@ public class Graph {
 	public Map<Vertex, ArrayList<Vertex>> getEdgeMap() {
 		return edgeMap;
 	}
-	
 }
