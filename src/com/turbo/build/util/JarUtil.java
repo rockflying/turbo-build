@@ -119,11 +119,11 @@ public class JarUtil {
 			for(Clazz clazz : clazzList) {
 				String key = clazz.getName();
 				
-				if(map.containsKey(key)) {
-					if(confMap.containsKey(key)) {
-						addUniqJar(confMap.get(key),(jar));
+				if (map.containsKey(key)) {
+					if (confMap.containsKey(key)) {
+						addUniqJar(confMap.get(key), (jar));
 					} else {
-						if(jar.compareTo(map.get(key))==0) {
+						if (jar.compareTo(map.get(key)) == 0) {
 							continue;
 						}
 						ArrayList<Jar> jarList = new ArrayList<Jar>();
