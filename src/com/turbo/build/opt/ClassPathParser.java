@@ -14,7 +14,6 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import com.turbo.build.graph.Graph;
-import com.turbo.build.graph.Vertex;
 import com.turbo.build.util.ClasspathEntry;
 import com.turbo.build.util.Console;
 import com.turbo.build.util.Jar;
@@ -180,7 +179,7 @@ public class ClassPathParser {
 		
 		Set<String> keys = jarMap.keySet();
 		
-//		System.out.println(keys.size());
+		System.out.println(keys.size());
 		
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
 			String name = iter.next();
@@ -192,5 +191,10 @@ public class ClassPathParser {
 		Graph g = new Graph(util.findConflictJars());
 		System.out.println(g.getVertexSet().size());
 		System.out.println(g);
+		
+		List<ClasspathEntry> entries = parser.getEntries();
+		for(ClasspathEntry entry : entries) {
+			System.out.println(entry.element.getAttributeValue("path"));
+		}
 	}
 }

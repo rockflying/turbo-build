@@ -83,7 +83,7 @@ public class Jar {
 		}
 
 		if (version.equals("unknown") || jar.getVersion().equals("unknown")) {
-			return (int) (jar.modifyTime - modifyTime);
+			return Integer.MIN_VALUE;
 		}
 		return versionCompare(jar.getVersion(), version);
 	}

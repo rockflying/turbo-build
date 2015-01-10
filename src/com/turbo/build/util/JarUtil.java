@@ -54,8 +54,8 @@ public class JarUtil {
 				jarList.add(jar);
 				if (jar.compareTo(currentJar) != 0) {
 					jarList.add(currentJar);
+					conflictJars.put(currentJar.name, jarList);
 				}
-				conflictJars.put(currentJar.name, jarList);
 			} else {
 				boolean exists = false;
 				for (Iterator<Jar> iter2 = list.iterator(); iter2.hasNext();) {
@@ -121,8 +121,11 @@ public class JarUtil {
 				
 				if(map.containsKey(key)) {
 					if(confMap.containsKey(key)) {
-						confMap.get(key).add(jar);
+						addUniqJar(confMap.get(key),(jar));
 					} else {
+						if(jar.compareTo(map.get(key))==0) {
+							continue;
+						}
 						ArrayList<Jar> jarList = new ArrayList<Jar>();
 						jarList.add(map.get(key));
 						jarList.add(jar);
@@ -145,5 +148,18 @@ public class JarUtil {
 		}
 
 		return confMap;
+	}
+	
+	private void addUniqJar(ArrayList<Jar> jarList, Jar jar) {
+		boolean exists = false;
+		for(Jar j : jarList) {
+			if(j.compareTo(jar) == 0) {
+				exists = true;
+			}
+		}
+		
+		if(!exists) {
+			jarList.add(jar);
+		}
 	}
 }
