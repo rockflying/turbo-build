@@ -24,8 +24,8 @@ public class Vertex {
 		return jar;
 	}
 
-	public Vertex(String name, Jar jar) {
-		this.name = name;
+	public Vertex(Jar jar) {
+		this.name = jar.getFullname();
 		this.jar = jar;
 	}
 
@@ -54,7 +54,7 @@ public class Vertex {
 		// Override Auto-generated method stub
 		final int prime = 137;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((jar == null) ? 0 : jar.hashCode());
 		return result;
 	}
 

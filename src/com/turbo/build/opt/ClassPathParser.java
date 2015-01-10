@@ -13,6 +13,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import com.turbo.build.graph.Graph;
 import com.turbo.build.util.ClasspathEntry;
 import com.turbo.build.util.Console;
 import com.turbo.build.util.Jar;
@@ -159,7 +160,7 @@ public class ClassPathParser {
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("F:\\workspace\\com.turbo.build\\test-cases\\case2\\App\\.classpath");
+		ClassPathParser parser = new ClassPathParser("test-cases\\case2\\App\\.classpath");
 //		ClassPathParser parser = new ClassPathParser("F:\\workspace\\soot\\.classpath");
 
 		parser.extractJars();
@@ -187,6 +188,8 @@ public class ClassPathParser {
 			System.out.println(list);
 		}
 		
-		util.findConflictJars();
+		Graph g = new Graph(util.findConflictJars());
+		System.out.println(g.getVertexSet().size());
+		System.out.println(g);
 	}
 }

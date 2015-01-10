@@ -120,9 +120,6 @@ public class JarUtil {
 				String key = clazz.getName();
 				
 				if(map.containsKey(key)) {
-//					System.out.println("Conflict class: " + key);
-//					System.out.println("\t>> " + jar.getElement().getAttributeValue("path"));
-//					System.out.println("\t>> " + map.get(key).getElement().getAttributeValue("path"));
 					if(confMap.containsKey(key)) {
 						confMap.get(key).add(jar);
 					} else {

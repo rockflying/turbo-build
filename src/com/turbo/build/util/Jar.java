@@ -20,6 +20,7 @@ import org.jdom2.Element;
 
 public class Jar {
 	String name;
+	String fullname;
 	String path;
 	String version;
 	String md5;
@@ -145,6 +146,7 @@ public class Jar {
 		valid = true;
 		md5 = Md5Util.getMd5ByFile(file); // get the md5
 		name = file.getName();
+		fullname = name;
 		modifyTime = file.lastModified()/1000;  //seconds
 
 		// suppose that version contains at least one "."
@@ -240,6 +242,10 @@ public class Jar {
 
 	public List<Clazz> getClazzes() {
 		return clazzes;
+	}
+
+	public String getFullname() {
+		return fullname;
 	}
 
 	public static void main(String[] args) {
