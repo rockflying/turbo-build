@@ -85,6 +85,16 @@ public class Graph {
 		}
 	}
 	
+	/**
+	 * Remove the edge between src --> obj
+	 * @param src
+	 * @param obj
+	 * @return
+	 */
+	public boolean removeEdge(Vertex src, Vertex obj) {
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		String str = "";
@@ -93,10 +103,10 @@ public class Graph {
 		
 		while(mapIter.hasNext()) {
 			Vertex src = mapIter.next();
-			str += src.name + ":\n";
+			str += src.name + src.hashCode() +":\n";
 			ArrayList<Vertex> list = edgeMap.get(src);
 			for(Vertex vertex : list) {
-				str += "  " + vertex.name + "\n";
+				str += "  " + vertex.name + vertex.hashCode()+ "\n";
 			}
 		}
 		

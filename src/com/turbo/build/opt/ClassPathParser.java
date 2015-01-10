@@ -14,6 +14,7 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import com.turbo.build.graph.Graph;
+import com.turbo.build.graph.Vertex;
 import com.turbo.build.util.ClasspathEntry;
 import com.turbo.build.util.Console;
 import com.turbo.build.util.Jar;

@@ -2,6 +2,7 @@ package com.turbo.build.graph;
 
 import com.turbo.build.util.Jar;
 
+
 public class Vertex {
 	String name;
 	Vertex parent;
@@ -26,7 +27,7 @@ public class Vertex {
 
 	public Vertex(Jar jar) {
 		this.name = jar.getFullname();
-		this.jar = jar;
+		this.jar  = jar;
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class Vertex {
 		final int prime = 137;
 		int result = 1;
 		result = prime * result + ((jar == null) ? 0 : jar.hashCode());
+		
 		return result;
 	}
 

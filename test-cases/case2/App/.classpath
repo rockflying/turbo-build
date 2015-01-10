@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="libs/coffi.jar"/>
 	<classpathentry kind="lib" path="libs/tddoi.jar"/>
 	<classpathentry kind="lib" path="libs/colib.jar"/>
+	<classpathentry kind="lib" path="E:/Temp/coffi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
