@@ -1,0 +1,28 @@
+======== TestCase ========
+YellowBook1
+
+
+======== Problem ========
+This project relies on europeyellowbook.jar (built from EuropeYellowBook1 project), 
+which is further relying on mudam-lib-v2.jar.
+However, mudam-lib-v2.jar is not included in europeyellowbook.jar, 
+so it makes sense that there is a NoSuchMethodError when launch this project.
+
+
+======== Exception ========
+Exception in thread "main" java.lang.NoSuchMethodError: org.mudam.Mudam.getAddress(Z)Ljava/lang/String;
+	at org.europeyellowbook.EuropeYellowBook.getMudamAddress(EuropeYellowBook.java:10)
+	at org.yellowbook.YellowBook.main(YellowBook.java:14)
+	
+	
+======== Analysis ========
+This example shows a NoSuchMethodError, which does not contain that method in this project.
+Thus, this case is normal situations that NoSuchMethodError occurs.
+
+Our approach is going to solve the problem of NoSuchMethodError in the case that 
+the expected method does exist in the class-path.
+In other words, we are going to detect such NoSuchMethodError exceptions that is probably caused by library conflicts.
+
+The possible solution should at least report that method org.mudam.Mudam.getAddress(Z)Ljava/lang/String;
+does not exist in the current class path.
+e.g., by taking the method as input.
