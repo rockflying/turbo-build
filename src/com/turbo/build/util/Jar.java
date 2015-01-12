@@ -2,12 +2,9 @@ package com.turbo.build.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -26,8 +23,9 @@ public class Jar {
 	String md5;
 	long modifyTime;
 	boolean absolute;
-	List<Clazz> clazzes = new ArrayList<Clazz>();
-	List<String> clazzNames = new ArrayList<String>();
+//	List<Clazz> clazzes = new ArrayList<Clazz>();
+//	List<String> clazzNames = new ArrayList<String>();
+	Map<String, Clazz> clazzes = new HashMap<String, Clazz>();
 	
 	Element element;
 
@@ -230,8 +228,7 @@ public class Jar {
 //					System.out.println(entry);
 					String clazzName = entry.getName().replaceAll("/", ".")
 							.replace(".class", "");
-					clazzes.add(new Clazz(loader, clazzName));
-					clazzNames.add(clazzName);
+					clazzes.put(clazzName, new Clazz(loader, clazzName));
 				}
 			}
 			
@@ -243,11 +240,7 @@ public class Jar {
 		}
 	}
 
-	public List<String> getClazzNames() {
-		return clazzNames;
-	}
-
-	public List<Clazz> getClazzes() {
+	public Map<String, Clazz> getClazzes() {
 		return clazzes;
 	}
 
@@ -255,25 +248,25 @@ public class Jar {
 		return fullname;
 	}
 
-	public static void main(String[] args) {
-		//dexlib2-2.0.3-dev.jar
-		//jsoup-1.8.1.jar
-		//java_cup.jar
-		//org.hamcrest.core_1.3.0.jar
-		Jar jar = new Jar("F:/Temp/mudam-lib-v2.jar");
-//		System.out.println(jar.toString());
-		
-		for(Clazz clazz : jar.getClazzes()) {
-			System.out.println(clazz.getName());
-			
-			for(Method m : clazz.getMethods()) {
-				System.out.println(m.getDeclaringClass()+"."+m.getName());
-				System.out.println(m);
-			}
-			
-			for(Field field : clazz.getFields()) {
-				System.out.println(field);
-			}
-		}
-	}
+//	public static void main(String[] args) {
+//		//dexlib2-2.0.3-dev.jar
+//		//jsoup-1.8.1.jar
+//		//java_cup.jar
+//		//org.hamcrest.core_1.3.0.jar
+//		Jar jar = new Jar("F:/Temp/mudam-lib-v2.jar");
+////		System.out.println(jar.toString());
+//		
+//		for(Clazz clazz : jar.getClazzes()) {
+//			System.out.println(clazz.getName());
+//			
+//			for(Method m : clazz.getMethods()) {
+//				System.out.println(m.getDeclaringClass()+"."+m.getName());
+//				System.out.println(m);
+//			}
+//			
+//			for(Field field : clazz.getFields()) {
+//				System.out.println(field);
+//			}
+//		}
+//	}
 }

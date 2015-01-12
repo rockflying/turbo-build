@@ -1,6 +1,7 @@
 package com.turbo.build.graph;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.turbo.build.util.Clazz;
 import com.turbo.build.util.Jar;
@@ -77,19 +78,26 @@ public class Vertex {
 		Jar src = jar;
 		Jar obj = vertex.getJar();
 		
-		List<Clazz> srcClazzes = src.getClazzes();
-		List<String> srcClazzNames  = src.getClazzNames();
-		List<Clazz> objClazzes = obj.getClazzes();
-		List<String> objClazzNames  = obj.getClazzNames();
+		Map<String, Clazz> srcClazzes = src.getClazzes();
+		Map<String, Clazz> objClazzes = obj.getClazzes();
 		
-		boolean srcContainsObj = false;
-		boolean objContainsSrc = false;
+		boolean srcContainsObj = true;
+		boolean objContainsSrc = true;
 		
-		for(Clazz clazz : objClazzes) {
-			if(srcClazzNames.contains(clazz.getName())) {
+		Iterator<String> iter = objClazzes.keySet().iterator();
+		while(iter.hasNext()) {
+			String key = iter.next();
+			if(srcClazzes.containsKey(key)) {
+				Clazz srcClazz = srcClazzes.get(key);
+				Clazz objClazz = objClazzes.get(key);
 				
+				
+			}else {
+				srcContainsObj = false;
+				break;
 			}
 		}
+		
 		return 0;
 	}
 }

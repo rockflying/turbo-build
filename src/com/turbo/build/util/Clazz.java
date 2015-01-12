@@ -40,4 +40,14 @@ public class Clazz {
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public int comapreTo(Clazz obj) {
+		
+		return 4;
+	}
 }

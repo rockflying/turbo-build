@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -13,11 +11,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import com.turbo.build.graph.Graph;
 import com.turbo.build.util.ClasspathEntry;
 import com.turbo.build.util.Console;
-import com.turbo.build.util.Jar;
-import com.turbo.build.util.JarUtil;
 
 /**
  * Parse the classpath and get jar list
@@ -156,42 +151,5 @@ public class ClassPathParser {
 	private String getProjectLocation(String proj) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		return root.getProject(proj).getLocation().toString();
-	}
-
-	public static void main(String[] args) {
-
-		ClassPathParser parser = new ClassPathParser("test-cases\\case3\\App\\.classpath");
-//		ClassPathParser parser = new ClassPathParser("F:\\workspace\\soot\\.classpath");
-
-		parser.extractJars();
-
-//		for (Iterator<ClasspathEntry> iter = parser.getEntries().iterator(); iter.hasNext();) {
-//			ClasspathEntry key = iter.next();
-//			System.out.println(key.path);
-//		}
-		
-		JarUtil util = new JarUtil(parser.getEntries());
-//		System.out.println(util);
-		
-		util.resolveConflict();
-		
-		Map<String, List<Jar>> jarMap = util.getConflictJars();
-		
-		Set<String> keys = jarMap.keySet();
-		
-		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-			String name = iter.next();
-			System.out.println(">>> jar: " + name + " <<<");
-//			List<Jar> list = jarMap.get(name);
-//			System.out.println(list);
-		}
-		
-		Graph g = new Graph(util.findConflictJars());
-		System.out.println(g);
-//		
-//		List<ClasspathEntry> entries = parser.getEntries();
-//		for(ClasspathEntry entry : entries) {
-//			System.out.println(entry.element.getAttributeValue("path"));
-//		}
 	}
 }

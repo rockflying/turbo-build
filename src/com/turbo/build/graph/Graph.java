@@ -108,10 +108,10 @@ public class Graph {
 		
 		while(mapIter.hasNext()) {
 			Vertex src = mapIter.next();
-			str += src.name + src.hashCode() +":\n";
+			str += src.name +":\n";
 			ArrayList<Vertex> list = edgeMap.get(src);
 			for(Vertex vertex : list) {
-				str += "  " + vertex.name + vertex.hashCode()+ "\n";
+				str += "  " + vertex.name + "\n";
 			}
 		}
 		

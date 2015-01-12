@@ -114,10 +114,11 @@ public class JarUtil {
 
 		while(iter.hasNext()) {
 			Jar jar = iter.next();
-			List<Clazz> clazzList = jar.getClazzes();
+			Map<String, Clazz> clazzList = jar.getClazzes();
 
-			for(Clazz clazz : clazzList) {
-				String key = clazz.getName();
+			Iterator<String> clazzIter = clazzList.keySet().iterator();
+			while (clazzIter.hasNext()){
+				String key = clazzIter.next();
 				
 				if (map.containsKey(key)) {
 					if (confMap.containsKey(key)) {
@@ -132,7 +133,7 @@ public class JarUtil {
 						confMap.put(key, jarList);
 					}
 				} else {
-					map.put(clazz.getName(), jar);
+					map.put(key, jar);
 				}
 			}
 		}
