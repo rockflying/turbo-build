@@ -137,15 +137,15 @@ public class JarUtil {
 			}
 		}
 
-		Iterator<String>mapIter = confMap.keySet().iterator();
-		while(mapIter.hasNext()) {
-			String key = mapIter.next();
-			System.out.println(key);
-			ArrayList<Jar> list = confMap.get(key);
-			for(Jar jar : list) {
-				System.out.println("  >>> "+jar.getElement().getAttributeValue("path"));
-			}
-		}
+//		Iterator<String>mapIter = confMap.keySet().iterator();
+//		while(mapIter.hasNext()) {
+//			String key = mapIter.next();
+//			System.out.println(key);
+//			ArrayList<Jar> list = confMap.get(key);
+//			for(Jar jar : list) {
+//				System.out.println("  >>> "+jar.getElement().getAttributeValue("path"));
+//			}
+//		}
 
 		return confMap;
 	}

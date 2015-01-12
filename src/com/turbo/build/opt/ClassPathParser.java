@@ -160,7 +160,7 @@ public class ClassPathParser {
 
 	public static void main(String[] args) {
 
-		ClassPathParser parser = new ClassPathParser("test-cases\\case2\\App\\.classpath");
+		ClassPathParser parser = new ClassPathParser("test-cases\\case3\\App\\.classpath");
 //		ClassPathParser parser = new ClassPathParser("F:\\workspace\\soot\\.classpath");
 
 		parser.extractJars();
@@ -179,22 +179,19 @@ public class ClassPathParser {
 		
 		Set<String> keys = jarMap.keySet();
 		
-		System.out.println(keys.size());
-		
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
 			String name = iter.next();
 			System.out.println(">>> jar: " + name + " <<<");
-			List<Jar> list = jarMap.get(name);
-			System.out.println(list);
+//			List<Jar> list = jarMap.get(name);
+//			System.out.println(list);
 		}
 		
 		Graph g = new Graph(util.findConflictJars());
-		System.out.println(g.getVertexSet().size());
 		System.out.println(g);
-		
-		List<ClasspathEntry> entries = parser.getEntries();
-		for(ClasspathEntry entry : entries) {
-			System.out.println(entry.element.getAttributeValue("path"));
-		}
+//		
+//		List<ClasspathEntry> entries = parser.getEntries();
+//		for(ClasspathEntry entry : entries) {
+//			System.out.println(entry.element.getAttributeValue("path"));
+//		}
 	}
 }
