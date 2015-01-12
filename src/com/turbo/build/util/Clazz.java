@@ -2,6 +2,8 @@ package com.turbo.build.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Clazz {
 	private Method[] methods;
@@ -47,7 +49,24 @@ public class Clazz {
 	 * @return
 	 */
 	public int comapreTo(Clazz obj) {
-		
+		getMethodList();
+		getFieldList();
 		return 4;
+	}
+	
+	private List<String> getMethodList() {
+		List<String> methodList = new ArrayList<String>();
+		for (Method m : methods) {
+			methodList.add(m.toString());
+		}
+		return methodList;
+	}
+	
+	private List<String> getFieldList() {
+		List<String> fieldList = new ArrayList<String>();
+		for(Field f : fields) {
+			fieldList.add(f.toString());
+		}
+		return fieldList;
 	}
 }

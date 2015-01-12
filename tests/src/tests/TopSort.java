@@ -1,4 +1,4 @@
-package topsort;
+package tests;
 
 import java.util.HashMap;
 import java.util.HashSet;
