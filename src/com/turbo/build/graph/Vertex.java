@@ -1,5 +1,8 @@
 package com.turbo.build.graph;
 
+import java.util.List;
+
+import com.turbo.build.util.Clazz;
 import com.turbo.build.util.Jar;
 
 
@@ -60,4 +63,33 @@ public class Vertex {
 		return result;
 	}
 
+	/**
+	 * Compare two vertexes
+	 * @param vertex
+	 * objective vertex
+	 * @return
+	 * -1: this --> obj, obj.jar contains this.jar;
+	 *  0: this == obj , obj,jar is same as this.jar;
+	 *  1: this <-- obj, this.jar contains obj.jar;
+	 *  4: this and obj are incompatible
+	 */
+	public int comapreTo(Vertex vertex) {
+		Jar src = jar;
+		Jar obj = vertex.getJar();
+		
+		List<Clazz> srcClazzes = src.getClazzes();
+		List<String> srcClazzNames  = src.getClazzNames();
+		List<Clazz> objClazzes = obj.getClazzes();
+		List<String> objClazzNames  = obj.getClazzNames();
+		
+		boolean srcContainsObj = false;
+		boolean objContainsSrc = false;
+		
+		for(Clazz clazz : objClazzes) {
+			if(srcClazzNames.contains(clazz.getName())) {
+				
+			}
+		}
+		return 0;
+	}
 }

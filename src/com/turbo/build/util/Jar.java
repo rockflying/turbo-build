@@ -27,6 +27,7 @@ public class Jar {
 	long modifyTime;
 	boolean absolute;
 	List<Clazz> clazzes = new ArrayList<Clazz>();
+	List<String> clazzNames = new ArrayList<String>();
 	
 	Element element;
 
@@ -227,8 +228,10 @@ public class Jar {
 				
 				if (entry.toString().endsWith(".class")) {
 //					System.out.println(entry);
-					clazzes.add(new Clazz(loader, entry.getName().replaceAll("/", ".")
-							.replace(".class", "")));
+					String clazzName = entry.getName().replaceAll("/", ".")
+							.replace(".class", "");
+					clazzes.add(new Clazz(loader, clazzName));
+					clazzNames.add(clazzName);
 				}
 			}
 			
@@ -238,6 +241,10 @@ public class Jar {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public List<String> getClazzNames() {
+		return clazzNames;
 	}
 
 	public List<Clazz> getClazzes() {
