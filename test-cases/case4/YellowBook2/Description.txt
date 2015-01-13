@@ -1,0 +1,28 @@
+======== TestCase ========
+YellowBook2
+
+
+======== Problem ========
+This project relies on europeyellowbook.jar (built from EuropeYellowBook1 project),
+which is further relying on mudam-lib-v2.jar
+and luxembourgyellowbook.jar (built from LuxembourgYellowBook1 project), 
+which is further relying on mudam-lib-v1.jar.
+In this case, europeyellowbook.jar and luxembourgyellowbook.jar are conflicted.
+Since luxembourgyellowbook.jar is loaded before europeyellowbook.jar, 
+the Mudam class in europeyellowbook.jar will be ignored and 
+consequently cause method org.mudam.Mudam.getAddress(Z)Ljava/lang/String; cannot found error.
+
+======== Exception ========
+Exception in thread "main" java.lang.NoSuchMethodError: org.mudam.Mudam.getAddress(Z)Ljava/lang/String;
+	at org.europeyellowbook.EuropeYellowBook.getMudamAddress(EuropeYellowBook.java:16)
+	at org.yellowbook.YellowBook.main(YellowBook.java:14)
+	
+	
+======== Analysis ========
+This test case shows a basic NoSuchMethodError, which is caused by library conflicts.
+Since class Mudam in europeyellowbook.jar is backward compatible with class Mudam in luxembourgyellowbook.jar,
+if the system first load europeyellowbook.jar and then luxembourgyellowbook.jar,
+the problem would be solved.
+
+The possible solution should be able to detect this kind of NoSuchMethodError and 
+automatically fix this problem.
