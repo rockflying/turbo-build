@@ -49,6 +49,7 @@ public class Clazz {
 	 * @return
 	 */
 	public int comapreTo(Clazz obj) {
+		// TODO complete this function
 		getMethodList();
 		getFieldList();
 		return 4;

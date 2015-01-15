@@ -91,13 +91,17 @@ public class Vertex {
 				Clazz srcClazz = srcClazzes.get(key);
 				Clazz objClazz = objClazzes.get(key);
 				
-				
+				srcClazz.comapreTo(objClazz);
 			}else {
 				srcContainsObj = false;
 				break;
 			}
 		}
 		
-		return 0;
+		if(srcContainsObj && objContainsSrc) {
+			return 0;
+		}
+		
+		return 4;
 	}
 }

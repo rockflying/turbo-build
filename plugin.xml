@@ -51,6 +51,13 @@
                enablesFor="1"
                id="com.turbo.build.check">
          </action>
+         <action
+               label="Diagnose"
+               class="com.turbo.build.popup.actions.CheckConflictAction"
+               menubarPath="turbo.menu/group"
+               enablesFor="1"
+               id="com.turbo.build.check">
+         </action>
       </objectContribution>
    </extension>
 

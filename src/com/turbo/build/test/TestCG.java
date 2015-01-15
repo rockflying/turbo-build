@@ -11,8 +11,6 @@ import com.turbo.build.util.JarUtil;
 
 public class TestCG {
 	
-	private int a;
-	
 	int b;
 	
 	public String name;

@@ -8,7 +8,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.apache.bcel.classfile.ClassParser;
-import org.apache.bcel.classfile.JavaClass;
 
 import com.turbo.build.util.Jar;
 
