@@ -86,6 +86,8 @@ public class MethodVisitor extends EmptyVisitor {
     @Override
     public void visitINVOKEVIRTUAL(INVOKEVIRTUAL i) {
         System.out.println(String.format(format,"M",i.getReferenceType(cp),i.getMethodName(cp)));
+        
+        System.out.println(i.getArgumentTypes(cp).length);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MethodVisitor extends EmptyVisitor {
 
     @Override
     public void visitINVOKESPECIAL(INVOKESPECIAL i) {
-        System.out.println(String.format(format,"O",i.getReferenceType(cp),i.getMethodName(cp)));
+//        System.out.println(String.format(format,"O",i.getReferenceType(cp),i.getMethodName(cp)));
     }
 
     @Override

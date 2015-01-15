@@ -31,6 +31,7 @@ package com.turbo.build.cg;
 import org.apache.bcel.classfile.Constant;
 import org.apache.bcel.classfile.ConstantPool;
 import org.apache.bcel.classfile.EmptyVisitor;
+import org.apache.bcel.classfile.Field;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ConstantPoolGen;
@@ -52,6 +53,7 @@ public class ClassVisitor extends EmptyVisitor {
         classReferenceFormat = "C:" + clazz.getClassName() + " %s";
     }
 
+    @Override
     public void visitJavaClass(JavaClass jc) {
         jc.getConstantPool().accept(this);
         Method[] methods = jc.getMethods();
@@ -59,6 +61,7 @@ public class ClassVisitor extends EmptyVisitor {
             methods[i].accept(this);
     }
 
+    @Override
     public void visitConstantPool(ConstantPool constantPool) {
         for (int i = 0; i < constantPool.getLength(); i++) {
             Constant constant = constantPool.getConstant(i);
@@ -73,13 +76,20 @@ public class ClassVisitor extends EmptyVisitor {
         }
     }
 
+    @Override
     public void visitMethod(Method method) {
         MethodGen mg = new MethodGen(method, clazz.getClassName(), constants);
         MethodVisitor visitor = new MethodVisitor(mg, clazz);
         visitor.start(); 
     }
 
-    public void start() {
+    @Override
+	public void visitField(Field obj) {
+		// TODO Auto-generated method stub
+		super.visitField(obj);
+	}
+
+	public void start() {
         visitJavaClass(clazz);
     }
 }
