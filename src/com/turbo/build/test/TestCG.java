@@ -22,7 +22,7 @@ public class TestCG {
 		JarUtil util = new JarUtil(parser.getEntries());
 //		System.out.println(util.getJars());
 		
-		CallGraph cg = new CallGraph(util.getJars());
+		CallGraph cg = new CallGraph(util.getJars(), null);
 		cg.buildCallGraph();
 		
 		System.out.println("--------------------------------------");

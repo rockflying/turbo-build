@@ -14,6 +14,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import com.turbo.build.opt.BuildPathModifier;
 import com.turbo.build.util.Console;
+import com.turbo.build.util.ProjectInfo;
 
 public class CheckConflictAction implements IObjectActionDelegate {
 
@@ -78,5 +79,7 @@ public class CheckConflictAction implements IObjectActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 //		selection.
 		this.selection = selection;
+		
+		ProjectInfo.projectInfo(selection);
 	}
 }

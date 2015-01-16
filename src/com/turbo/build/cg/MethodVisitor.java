@@ -42,6 +42,9 @@ import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.ReturnInstruction;
 
+import com.turbo.build.util.Console;
+import com.turbo.build.util.SkippedPackages;
+
 /**
  * The simplest of method visitors, prints any invoked method
  * signature for all method invocations.
@@ -85,14 +88,18 @@ public class MethodVisitor extends EmptyVisitor {
 
     @Override
     public void visitINVOKEVIRTUAL(INVOKEVIRTUAL i) {
-        System.out.println(String.format(format,"M",i.getReferenceType(cp),i.getMethodName(cp)));
-        
-        System.out.println(i.getArgumentTypes(cp).length);
+    	String clazz = i.getReferenceType(cp).toString();
+    	
+    	if(SkippedPackages.packlist.contains(getPackage(clazz))) {
+    		return;
+    	}
+    	
+        Console.println(String.format(format,"M",clazz,i.getMethodName(cp)));
     }
 
     @Override
     public void visitINVOKEINTERFACE(INVOKEINTERFACE i) {
-        System.out.println(String.format(format,"I",i.getReferenceType(cp),i.getMethodName(cp)));
+    	Console.println(String.format(format,"I",i.getReferenceType(cp),i.getMethodName(cp)));
     }
 
     @Override
@@ -102,6 +109,27 @@ public class MethodVisitor extends EmptyVisitor {
 
     @Override
     public void visitINVOKESTATIC(INVOKESTATIC i) {
-        System.out.println(String.format(format,"S",i.getReferenceType(cp),i.getMethodName(cp)));
+		String clazz = i.getReferenceType(cp).toString();
+
+		if (SkippedPackages.packlist.contains(getPackage(clazz))) {
+			return;
+		}
+    	
+    	Console.println(String.format(format,"S",clazz,i.getMethodName(cp)));
     }
+    
+    /**
+     * get the package of this class, e.g. java.lang
+     * @param clazz
+     * @return
+     */
+    private String getPackage(String clazz) {
+		int index = clazz.indexOf(".");
+		index = clazz.indexOf(".", index+1);
+		
+		if(index < 0) {
+			return null;
+		}
+		return clazz.substring(0, index);
+	}
 }

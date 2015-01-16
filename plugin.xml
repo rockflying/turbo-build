@@ -53,7 +53,7 @@
          </action>
          <action
                label="Diagnose"
-               class="com.turbo.build.popup.actions.CheckConflictAction"
+               class="com.turbo.build.popup.actions.DiagnoseAction"
                menubarPath="turbo.menu/group"
                enablesFor="1"
                id="com.turbo.build.check">

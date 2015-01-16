@@ -14,44 +14,62 @@ import com.turbo.build.util.Jar;
 public class CallGraph {
 
 	private List<Jar> jars = null;
+	
+	private List<String> clazzList = null;
 
-	public CallGraph(List<Jar> jars) {
+	public CallGraph(List<Jar> jars, List<String> clazzes) {
 		this.jars = jars;
+		this.clazzList = clazzes;
 	}
 
 	public void buildCallGraph() {
 		ClassParser cp;
 		try {
-			for (Jar jarfile : jars) {
+			if (jars != null) {
+				for (Jar jarfile : jars) {
 
-				File f = new File(jarfile.getPath());
+					File f = new File(jarfile.getPath());
 
-				if (!f.exists()) {
-					System.err.println("Jar file " + jarfile.getPath()
-							+ " does not exist");
+					if (!f.exists()) {
+						System.err.println("Jar file " + jarfile.getPath()
+								+ " does not exist");
+					}
+					
+					JarFile jar = new JarFile(f);
+
+					Enumeration<JarEntry> entries = jar.entries();
+					while (entries.hasMoreElements()) {
+						JarEntry entry = entries.nextElement();
+						if (entry.isDirectory())
+							continue;
+
+						if (!entry.getName().endsWith(".class"))
+							continue;
+
+						cp = new ClassParser(jarfile.getPath(), entry.getName());
+						ClassVisitor visitor = new ClassVisitor(cp.parse());
+						visitor.start();
+					}
+
+					jar.close();
 				}
-				System.out.println("building jar: " + jarfile.getFullname());
-				JarFile jar = new JarFile(f);
-
-				Enumeration<JarEntry> entries = jar.entries();
-				while (entries.hasMoreElements()) {
-					JarEntry entry = entries.nextElement();
-					if (entry.isDirectory())
-						continue;
-
-					if (!entry.getName().endsWith(".class"))
-						continue;
-
-					cp = new ClassParser(jarfile.getPath(), entry.getName());
-					ClassVisitor visitor = new ClassVisitor(cp.parse());
-					visitor.start();
-				}
-
-				jar.close();
 			}
 		} catch (IOException e) {
 			System.err.println("Error while processing jar: " + e.getMessage());
 			e.printStackTrace();
+		}
+		
+		if (clazzList != null) {
+			for (String clazz : clazzList) {
+				try {
+					cp = new ClassParser(clazz);
+					ClassVisitor visitor = new ClassVisitor(cp.parse());
+					visitor.start();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
