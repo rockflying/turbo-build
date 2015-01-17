@@ -42,7 +42,7 @@ import org.apache.bcel.generic.InstructionHandle;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.ReturnInstruction;
 
-import com.turbo.build.util.Console;
+import com.turbo.build.util.IMethod;
 import com.turbo.build.util.SkippedPackages;
 
 /**
@@ -94,12 +94,13 @@ public class MethodVisitor extends EmptyVisitor {
     		return;
     	}
     	
-        Console.println(String.format(format,"M",clazz,i.getMethodName(cp)));
+//        Console.println(String.format(format,"M",clazz,i.getMethodName(cp)));
+    	CallGraph.addMethod(new IMethod(visitedClass.getClassName(), mg.getName()));
     }
 
     @Override
     public void visitINVOKEINTERFACE(INVOKEINTERFACE i) {
-    	Console.println(String.format(format,"I",i.getReferenceType(cp),i.getMethodName(cp)));
+//    	Console.println(String.format(format,"I",i.getReferenceType(cp),i.getMethodName(cp)));
     }
 
     @Override
@@ -115,7 +116,8 @@ public class MethodVisitor extends EmptyVisitor {
 			return;
 		}
     	
-    	Console.println(String.format(format,"S",clazz,i.getMethodName(cp)));
+//    	Console.println(String.format(format,"S",clazz,i.getMethodName(cp)));
+		CallGraph.addMethod(new IMethod(visitedClass.getClassName(), mg.getName()));
     }
     
     /**
@@ -126,7 +128,7 @@ public class MethodVisitor extends EmptyVisitor {
     private String getPackage(String clazz) {
 		int index = clazz.indexOf(".");
 		index = clazz.indexOf(".", index+1);
-		
+
 		if(index < 0) {
 			return null;
 		}

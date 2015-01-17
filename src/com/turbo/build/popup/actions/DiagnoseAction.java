@@ -41,8 +41,7 @@ public class DiagnoseAction implements IObjectActionDelegate {
 			Console.println(clazz);			
 		}
 		
-		CallGraph cg = new CallGraph(null, loader.getClazzList());
-		cg.buildCallGraph();
+		CallGraph.buildCallGraphFromClasses(loader.getClazzList());
 	}
 
 	/**

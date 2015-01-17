@@ -7,6 +7,7 @@ import org.apache.bcel.classfile.JavaClass;
 import com.turbo.build.cg.CallGraph;
 import com.turbo.build.cg.ClassVisitor;
 import com.turbo.build.opt.ClassPathParser;
+import com.turbo.build.util.IMethod;
 import com.turbo.build.util.JarUtil;
 
 public class TestCG {
@@ -22,8 +23,7 @@ public class TestCG {
 		JarUtil util = new JarUtil(parser.getEntries());
 //		System.out.println(util.getJars());
 		
-		CallGraph cg = new CallGraph(util.getJars(), null);
-		cg.buildCallGraph();
+		CallGraph.buildCallGraphFromJars(util.getJars());
 		
 		System.out.println("--------------------------------------");
 		try {
@@ -38,15 +38,10 @@ public class TestCG {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ClassLoader loader = ClassLoader.getSystemClassLoader();
-		System.out.println(loader);
-		System.out.println(Object.class.getClasses().length);
-		try {
-			loader.loadClass("");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		System.out.println(CallGraph.getMethods().size());
+		for(IMethod m : CallGraph.getMethods()) {
+			System.out.println(m);
 		}
 	}
 }
