@@ -38,6 +38,7 @@ public class CallGraph {
 		if (null == jars) {
 			return;
 		}
+//		cleanup();
 		CallGraph.jars = jars;
 
 		try {
@@ -80,7 +81,7 @@ public class CallGraph {
 		if (null == clazzList) {
 			return;
 		}
-
+//		cleanup();
 		CallGraph.clazzList = clazzList;
 		ClassParser cp;
 
@@ -107,9 +108,13 @@ public class CallGraph {
 			return;
 		}
 
-		List<IMethod> list = caller.getCallees();
+		List<IMethod> list = methods.get(methods.indexOf(caller)).getCallees();
 		if (!list.contains(callee)) {
 			list.add(callee);
 		}
 	}
+	
+//	private static void cleanup() {
+//		methods.clear();
+//	}
 }

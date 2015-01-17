@@ -39,6 +39,7 @@ import org.apache.bcel.generic.INVOKEVIRTUAL;
 import org.apache.bcel.generic.Instruction;
 import org.apache.bcel.generic.InstructionConstants;
 import org.apache.bcel.generic.InstructionHandle;
+import org.apache.bcel.generic.InvokeInstruction;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.ReturnInstruction;
 
@@ -56,14 +57,14 @@ public class MethodVisitor extends EmptyVisitor {
     JavaClass visitedClass;
     private MethodGen mg;
     private ConstantPoolGen cp;
-    private String format;
+//    private String format;
 
     public MethodVisitor(MethodGen m, JavaClass jc) {
         visitedClass = jc;
         mg = m;
         cp = mg.getConstantPool();
-        format = "M:" + visitedClass.getClassName() + ":" + mg.getName() 
-            + " " + "(%s)%s:%s";
+//        format = "M:" + visitedClass.getClassName() + ":" + mg.getName() 
+//            + " " + "(%s)%s:%s";
     }
 
     public void start() {
@@ -94,8 +95,7 @@ public class MethodVisitor extends EmptyVisitor {
     		return;
     	}
     	
-//        Console.println(String.format(format,"M",clazz,i.getMethodName(cp)));
-    	CallGraph.addMethod(new IMethod(visitedClass.getClassName(), mg.getName()));
+    	addMethod(i);
     }
 
     @Override
@@ -117,7 +117,8 @@ public class MethodVisitor extends EmptyVisitor {
 		}
     	
 //    	Console.println(String.format(format,"S",clazz,i.getMethodName(cp)));
-		CallGraph.addMethod(new IMethod(visitedClass.getClassName(), mg.getName()));
+//		CallGraph.addMethod(new IMethod(visitedClass.getClassName(), mg.getName()));
+		addMethod(i);
     }
     
     /**
@@ -134,4 +135,20 @@ public class MethodVisitor extends EmptyVisitor {
 		}
 		return clazz.substring(0, index);
 	}
+    
+    /**
+     * 
+     * @param i
+     */
+    private void addMethod(InvokeInstruction i) {
+		IMethod caller = new IMethod(visitedClass.getClassName(), mg.getName(),
+				mg.getArgumentTypes(), mg.getReturnType());
+    	CallGraph.addMethod(caller);
+    	
+		IMethod callee = new IMethod(i.getReferenceType(cp).toString(),
+				i.getMethodName(cp), i.getArgumentTypes(cp), i.getReturnType(cp));
+//		callee.setParameters(i.getArgumentTypes(cp));
+		
+    	CallGraph.addCallee(caller, callee);
+    }
 }

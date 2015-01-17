@@ -7,8 +7,11 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import com.turbo.build.cg.CallGraph;
+import com.turbo.build.opt.ClassPathParser;
 import com.turbo.build.util.ClassListLoader;
 import com.turbo.build.util.Console;
+import com.turbo.build.util.IMethod;
+import com.turbo.build.util.JarUtil;
 import com.turbo.build.util.ProjectInfo;
 
 public class DiagnoseAction implements IObjectActionDelegate {
@@ -42,6 +45,21 @@ public class DiagnoseAction implements IObjectActionDelegate {
 		}
 		
 		CallGraph.buildCallGraphFromClasses(loader.getClazzList());
+
+		ClassPathParser parser = new ClassPathParser(ProjectInfo.classpath);
+
+		parser.extractJars();
+
+		JarUtil jutil = new JarUtil(parser.getEntries());
+		
+		CallGraph.buildCallGraphFromJars(jutil.getJars());
+		// TODO delete
+		for (IMethod m : CallGraph.getMethods()) {
+			Console.println(m);
+			for (IMethod callee : m.getCallees()) {
+				Console.println("\t" + callee);
+			}
+		}
 	}
 
 	/**
