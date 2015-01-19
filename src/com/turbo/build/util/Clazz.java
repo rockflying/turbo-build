@@ -1,26 +1,21 @@
 package com.turbo.build.util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.bcel.classfile.Field;
+import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.Method;
 
 public class Clazz {
 	private Method[] methods;
 	private Field [] fields;
 	private String   name;
 	
-	public Clazz(JarClassLoader loader, String strclazz) {
-		name = strclazz;
-		try {
-			Class<?> clazz = loader.loadClass(strclazz);
-//			System.out.println(clazz.getMethods());
-			methods = clazz.getMethods();
-			fields  = clazz.getFields();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Clazz(JavaClass clazz) {
+		name = clazz.getClassName();
+		methods = clazz.getMethods();
+		fields  = clazz.getFields();
 	}
 
 	@Override

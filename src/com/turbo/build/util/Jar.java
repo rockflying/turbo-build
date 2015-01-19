@@ -2,7 +2,6 @@ package com.turbo.build.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +12,7 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.bcel.classfile.ClassParser;
 import org.jdom2.Element;
 
 public class Jar {
@@ -193,7 +193,7 @@ public class Jar {
 
 		try {
 			JarFile jar = new JarFile(file);
-			JarClassLoader loader = new JarClassLoader(new URL[]{});
+//			JarClassLoader loader = new JarClassLoader(new URL[]{});
 
 			if (version == "unknown") {
 				Manifest manifest = jar.getManifest();
@@ -219,8 +219,9 @@ public class Jar {
 				}
 			}
 			
-			loader.addJar(file.toURI().toURL());
+//			loader.addJar(file.toURI().toURL());
 			Enumeration<JarEntry> files = jar.entries();
+			ClassParser cp;
 			while (files.hasMoreElements()) {
 				JarEntry entry = files.nextElement();
 				
@@ -228,13 +229,13 @@ public class Jar {
 //					System.out.println(entry);
 					String clazzName = entry.getName().replaceAll("/", ".")
 							.replace(".class", "");
-					System.out.println(clazzName);
-					clazzes.put(clazzName, new Clazz(loader, clazzName));
+					cp = new ClassParser(file.getAbsolutePath(), entry.getName());
+					clazzes.put(clazzName, new Clazz(cp.parse()));
 				}
 			}
 			
 			jar.close();
-			loader.close();
+//			loader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
