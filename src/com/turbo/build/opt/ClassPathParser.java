@@ -150,6 +150,13 @@ public class ClassPathParser {
 
 	private String getProjectLocation(String proj) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		return root.getProject(proj).getLocation().toString();
+		String location = null;
+		try {
+			// in case that the project doesn't exist in current workspace
+			location = root.getProject(proj).getLocation().toString();
+		} catch (Exception e) {
+			location = null;
+		}
+		return location;
 	}
 }
