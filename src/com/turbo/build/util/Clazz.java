@@ -23,6 +23,12 @@ public class Clazz {
 		}
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
 	public Method[] getMethods() {
 		return methods;
 	}

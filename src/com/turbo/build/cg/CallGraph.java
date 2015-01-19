@@ -12,6 +12,7 @@ import org.apache.bcel.classfile.ClassParser;
 
 import com.turbo.build.util.IMethod;
 import com.turbo.build.util.Jar;
+import com.turbo.build.util.ProjectInfo;
 
 public class CallGraph {
 
@@ -38,7 +39,7 @@ public class CallGraph {
 		if (null == jars) {
 			return;
 		}
-//		cleanup();
+		cleanup();
 		CallGraph.jars = jars;
 
 		try {
@@ -81,7 +82,7 @@ public class CallGraph {
 		if (null == clazzList) {
 			return;
 		}
-//		cleanup();
+		cleanup();
 		CallGraph.clazzList = clazzList;
 		ClassParser cp;
 
@@ -114,7 +115,10 @@ public class CallGraph {
 		}
 	}
 	
-//	private static void cleanup() {
-//		methods.clear();
-//	}
+	private static void cleanup() {
+		if (ProjectInfo.changed) {
+			// only clear when the project selected changed
+			methods.clear();
+		}
+	}
 }

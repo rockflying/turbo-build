@@ -17,6 +17,9 @@ public class ProjectInfo {
 	public static String output = null;
 	
 	public static IProject project = null;
+	
+	//denote whether the project selected has changed
+	public static boolean changed = false;
 
 	public static void projectInfo(ISelection selection) {
 		Object element = ((IStructuredSelection) selection).getFirstElement();
@@ -25,7 +28,11 @@ public class ProjectInfo {
 			return;
 		}
 		
-		project = ((IResource)element).getProject();
+		IProject proSelected = ((IResource)element).getProject();
+		if(!proSelected.equals(project)) {
+			changed = true;
+			project = proSelected;
+		}
 		
 		projectLocation = project.getLocation().toString();
 		

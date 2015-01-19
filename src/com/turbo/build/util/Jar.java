@@ -228,6 +228,7 @@ public class Jar {
 //					System.out.println(entry);
 					String clazzName = entry.getName().replaceAll("/", ".")
 							.replace(".class", "");
+					System.out.println(clazzName);
 					clazzes.put(clazzName, new Clazz(loader, clazzName));
 				}
 			}
