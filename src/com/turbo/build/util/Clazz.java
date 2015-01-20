@@ -51,8 +51,26 @@ public class Clazz {
 	 */
 	public int comapreTo(Clazz obj) {
 		// TODO complete this function
-		getMethodList();
-		getFieldList();
+		List<String> srcMethods = getMethodList();
+		List<String> srcFields = getFieldList();
+		
+		List<String> objMethods = obj.getMethodList();
+		List<String> objFields = obj.getFieldList();
+		
+		boolean srcContainsObj = srcMethods.containsAll(objMethods)
+				&& srcFields.containsAll(objFields);
+		
+		boolean objContainsObj = objMethods.containsAll(srcMethods)
+				&& objFields.containsAll(srcFields);
+		
+		if(srcContainsObj && objContainsObj) {
+			return 0;
+		} else if(srcContainsObj) {
+			return 1;
+		} else if(objContainsObj) {
+			return -1;
+		}
+		
 		return 4;
 	}
 	
