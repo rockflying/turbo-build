@@ -1,11 +1,5 @@
 package com.turbo.build.graph;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import com.turbo.build.util.Clazz;
 import com.turbo.build.util.Jar;
 
 
@@ -80,47 +74,6 @@ public class Vertex {
 		Jar src = jar;
 		Jar obj = vertex.getJar();
 		
-		Map<String, Clazz> srcClazzes = src.getClazzes();
-		Map<String, Clazz> objClazzes = obj.getClazzes();
-		
-		Iterator<String> iter = null;
-		
-		List<String> srcMethods = new ArrayList<String>();
-		List<String> objMethods = new ArrayList<String>();
-		
-		List<String> srcFields = new ArrayList<String>();
-		List<String> objFields = new ArrayList<String>();
-		
-		iter = srcClazzes.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			Clazz srcClazz = srcClazzes.get(key);
-			srcMethods.addAll(srcClazz.getMethodList());
-			srcFields.addAll(srcClazz.getFieldList());
-		}
-		
-		iter = objClazzes.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			Clazz objClazz = objClazzes.get(key);
-			objMethods.addAll(objClazz.getMethodList());
-			objFields.addAll(objClazz.getFieldList());
-		}
-		
-		boolean srcContainsObj = srcMethods.containsAll(objMethods)
-				&& srcFields.containsAll(objFields);
-		
-		boolean objContainsSrc = objMethods.containsAll(srcMethods)
-				&& objFields.containsAll(srcFields);
-		
-		if(srcContainsObj && objContainsSrc) {
-			return 0;
-		} else if(srcContainsObj) {
-			return 1;
-		} else if(objContainsSrc) {
-			return -1;
-		}
-		
-		return 4;
+		return src.compareTo(obj);
 	}
 }

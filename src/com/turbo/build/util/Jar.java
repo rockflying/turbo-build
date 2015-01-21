@@ -2,8 +2,11 @@ package com.turbo.build.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -75,23 +78,72 @@ public class Jar {
 		return element;
 	}
 
+	/**
+	 * Compare two jars
+	 * @param jar
+	 * objective jar
+	 * @return
+	 * -1: this --> jar, jar contains this;
+	 *  0: this == jar , jar is same as this.jar;
+	 *  1: this <-- jar, this contains jar;
+	 *  4: this and jar are incompatible
+	 */
 	public int compareTo(Jar jar) {
 
 		if (md5.equals(jar.md5)) {
 			return 0;
 		}
-
-		if (version.equals("unknown") || jar.getVersion().equals("unknown")) {
-			return Integer.MIN_VALUE;
+		
+		Map<String, Clazz> srcClazzes = clazzes;
+		Map<String, Clazz> objClazzes = jar.getClazzes();
+		
+		Iterator<String> iter = null;
+		
+		List<String> srcMethods = new ArrayList<String>();
+		List<String> objMethods = new ArrayList<String>();
+		
+		List<String> srcFields = new ArrayList<String>();
+		List<String> objFields = new ArrayList<String>();
+		
+		iter = srcClazzes.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			Clazz srcClazz = srcClazzes.get(key);
+			srcMethods.addAll(srcClazz.getMethodList());
+			srcFields.addAll(srcClazz.getFieldList());
 		}
-		return versionCompare(jar.getVersion(), version);
+		
+		iter = objClazzes.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			Clazz objClazz = objClazzes.get(key);
+			objMethods.addAll(objClazz.getMethodList());
+			objFields.addAll(objClazz.getFieldList());
+		}
+		
+		boolean srcContainsObj = srcMethods.containsAll(objMethods)
+				&& srcFields.containsAll(objFields);
+		
+		boolean objContainsSrc = objMethods.containsAll(srcMethods)
+				&& objFields.containsAll(srcFields);
+		
+		if(srcContainsObj && objContainsSrc) {
+			return 0;
+		} else if(srcContainsObj) {
+			return 1;
+		} else if(objContainsSrc) {
+			return -1;
+		}
+		
+		return 4;
+		
+//		no longer depends on version of jars
+//		return versionCompare(jar.getVersion(), version);
 	}
 
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		
 		return "name: " + name + "\n" +
 			   "path: " + path + "\n" +
 		       "version: " + version + "\n" +
@@ -100,6 +152,8 @@ public class Jar {
 			   "valid: " + valid;
 	}
 
+	@SuppressWarnings("unused")
+	// TODO remove this method if not needed in the end
 	private int versionCompare(String ver1, String ver2) {
 		int res = Integer.MIN_VALUE;
 		
@@ -237,7 +291,6 @@ public class Jar {
 			jar.close();
 //			loader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
