@@ -6,6 +6,7 @@ import com.turbo.build.util.Jar;
 public class Vertex {
 	String name;
 	Vertex parent;
+	Color color;
 	
 	Jar    jar;    // Save the jar to get extra info
 	

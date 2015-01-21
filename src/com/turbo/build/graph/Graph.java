@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -116,5 +117,42 @@ public class Graph {
 		}
 		
 		return str;
+	}
+	
+	public Vertex[] topologicalSort() {
+		Set<Vertex> vertexSet = getVertexSet();
+		if (vertexSet.size() < 2) {
+			return vertexSet.toArray(new Vertex[0]);
+		}
+
+		LinkedList<Vertex> sortedList = new LinkedList<Vertex>();
+
+		for (Vertex vertex : vertexSet) {
+			if (vertex.color == Color.WHITE) {
+				visitVertex(vertex, sortedList);
+			}
+		}
+
+		return sortedList.toArray(new Vertex[0]);
+	}
+	
+	/**
+	 * Depth First Search
+	 */
+	public void visitVertex(Vertex vertex, LinkedList<Vertex> sortedList) {
+		vertex.color = Color.GRAY;
+
+		ArrayList<Vertex> adjacencys = edgeMap.get(vertex);
+		if (adjacencys != null) {
+			for (Vertex adjacency : adjacencys) {
+				if (adjacency.color == Color.WHITE) {
+					adjacency.parent = vertex;
+					visitVertex(adjacency, sortedList);
+				}
+			}
+		}
+
+		vertex.color = Color.BLACK;
+		sortedList.addLast(vertex);
 	}
 }
