@@ -83,37 +83,7 @@ public class Vertex {
 		Map<String, Clazz> srcClazzes = src.getClazzes();
 		Map<String, Clazz> objClazzes = obj.getClazzes();
 		
-		boolean srcContainsObj = true;
-		boolean objContainsSrc = true;
-		
-		int ret = 4;
-		
-		Iterator<String> iter = objClazzes.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			if (srcClazzes.containsKey(key)) {
-				Clazz srcClazz = srcClazzes.get(key);
-				Clazz objClazz = objClazzes.get(key);
-
-				switch (srcClazz.comapreTo(objClazz)) {
-				case -1:
-					srcContainsObj = false;
-					break;
-				case 0:
-				case 1:
-					break;
-				case 4:
-					return 4;
-				}
-			} else {
-				srcContainsObj = false;
-				break;
-			}
-			
-			if(srcContainsObj = false) {
-				break;
-			}
-		}
+		Iterator<String> iter = null;
 		
 		List<String> srcMethods = new ArrayList<String>();
 		List<String> objMethods = new ArrayList<String>();
@@ -137,6 +107,20 @@ public class Vertex {
 			objFields.addAll(objClazz.getFieldList());
 		}
 		
-		return ret;
+		boolean srcContainsObj = srcMethods.containsAll(objMethods)
+				&& srcFields.containsAll(objFields);
+		
+		boolean objContainsSrc = objMethods.containsAll(srcMethods)
+				&& objFields.containsAll(srcFields);
+		
+		if(srcContainsObj && objContainsSrc) {
+			return 0;
+		} else if(srcContainsObj) {
+			return 1;
+		} else if(objContainsSrc) {
+			return -1;
+		}
+		
+		return 4;
 	}
 }
