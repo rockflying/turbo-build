@@ -1,6 +1,8 @@
 package com.turbo.build.graph;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.turbo.build.util.Clazz;
@@ -84,24 +86,57 @@ public class Vertex {
 		boolean srcContainsObj = true;
 		boolean objContainsSrc = true;
 		
+		int ret = 4;
+		
 		Iterator<String> iter = objClazzes.keySet().iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			String key = iter.next();
-			if(srcClazzes.containsKey(key)) {
+			if (srcClazzes.containsKey(key)) {
 				Clazz srcClazz = srcClazzes.get(key);
 				Clazz objClazz = objClazzes.get(key);
-				
-				srcClazz.comapreTo(objClazz);
-			}else {
+
+				switch (srcClazz.comapreTo(objClazz)) {
+				case -1:
+					srcContainsObj = false;
+					break;
+				case 0:
+				case 1:
+					break;
+				case 4:
+					return 4;
+				}
+			} else {
 				srcContainsObj = false;
+				break;
+			}
+			
+			if(srcContainsObj = false) {
 				break;
 			}
 		}
 		
-		if(srcContainsObj && objContainsSrc) {
-			return 0;
+		List<String> srcMethods = new ArrayList<String>();
+		List<String> objMethods = new ArrayList<String>();
+		
+		List<String> srcFields = new ArrayList<String>();
+		List<String> objFields = new ArrayList<String>();
+		
+		iter = srcClazzes.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			Clazz srcClazz = srcClazzes.get(key);
+			srcMethods.addAll(srcClazz.getMethodList());
+			srcFields.addAll(srcClazz.getFieldList());
 		}
 		
-		return 4;
+		iter = objClazzes.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			Clazz objClazz = objClazzes.get(key);
+			objMethods.addAll(objClazz.getMethodList());
+			objFields.addAll(objClazz.getFieldList());
+		}
+		
+		return ret;
 	}
 }

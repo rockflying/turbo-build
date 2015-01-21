@@ -60,21 +60,21 @@ public class Clazz {
 		boolean srcContainsObj = srcMethods.containsAll(objMethods)
 				&& srcFields.containsAll(objFields);
 		
-		boolean objContainsObj = objMethods.containsAll(srcMethods)
+		boolean objContainsSrc = objMethods.containsAll(srcMethods)
 				&& objFields.containsAll(srcFields);
 		
-		if(srcContainsObj && objContainsObj) {
+		if(srcContainsObj && objContainsSrc) {
 			return 0;
 		} else if(srcContainsObj) {
 			return 1;
-		} else if(objContainsObj) {
+		} else if(objContainsSrc) {
 			return -1;
 		}
 		
 		return 4;
 	}
 	
-	private List<String> getMethodList() {
+	public List<String> getMethodList() {
 		List<String> methodList = new ArrayList<String>();
 		for (Method m : methods) {
 			methodList.add(m.toString());
@@ -82,7 +82,7 @@ public class Clazz {
 		return methodList;
 	}
 	
-	private List<String> getFieldList() {
+	public List<String> getFieldList() {
 		List<String> fieldList = new ArrayList<String>();
 		for(Field f : fields) {
 			fieldList.add(f.toString());
