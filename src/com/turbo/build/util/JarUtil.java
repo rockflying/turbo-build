@@ -107,50 +107,26 @@ public class JarUtil {
 		return conflictJars;
 	}
 	
-	public Map<String, ArrayList<Jar>> findConflictJars() {
-		Map<String, Jar> map = new HashMap<String, Jar>();
-		Map<String, ArrayList<Jar>> confMap = new HashMap<String, ArrayList<Jar>>();
-		Iterator<Jar> iter = jars.iterator();  //all jars in the build path
+	public List<Jar[]> findConflictJars() {
+		List<Jar[]> confJars = new ArrayList<Jar[]>();
 
-		while(iter.hasNext()) {
-			Jar jar = iter.next();
-			Map<String, Clazz> clazzList = jar.getClazzes();
-
-			Iterator<String> clazzIter = clazzList.keySet().iterator();
-			while (clazzIter.hasNext()){
-				String key = clazzIter.next();
-				
-				if (map.containsKey(key)) {
-					if (confMap.containsKey(key)) {
-						addUniqJar(confMap.get(key), (jar));
-					} else {
-						if (jar.compareTo(map.get(key)) == 0) {
-							continue;
-						}
-						ArrayList<Jar> jarList = new ArrayList<Jar>();
-						jarList.add(map.get(key));
-						jarList.add(jar);
-						confMap.put(key, jarList);
-					}
-				} else {
-					map.put(key, jar);
+		for (int i = 0; i < jars.size(); ++i) {
+			Jar src = jars.get(i);
+			for (int j = i + 1; j < jars.size(); ++j) {
+				Jar obj = jars.get(j);
+				if (src.compareTo(obj) == 0 || src.compareTo(obj) == 4) {
+					continue;
 				}
+
+				confJars.add(new Jar[] { src, obj });
 			}
 		}
 
-//		Iterator<String>mapIter = confMap.keySet().iterator();
-//		while(mapIter.hasNext()) {
-//			String key = mapIter.next();
-//			System.out.println(key);
-//			ArrayList<Jar> list = confMap.get(key);
-//			for(Jar jar : list) {
-//				System.out.println("  >>> "+jar.getElement().getAttributeValue("path"));
-//			}
-//		}
-
-		return confMap;
+		return confJars;
 	}
 	
+	@SuppressWarnings("unused")
+	// TODO delete if not needed
 	private void addUniqJar(ArrayList<Jar> jarList, Jar jar) {
 		boolean exists = false;
 		for(Jar j : jarList) {

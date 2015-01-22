@@ -86,7 +86,8 @@ public class Jar {
 	 * -1: this --> jar, jar contains this;
 	 *  0: this == jar , jar is same as this.jar;
 	 *  1: this <-- jar, this contains jar;
-	 *  4: this and jar are incompatible
+	 *  2: this and jar contain certain same parts
+	 *  4: this and jar are completely different
 	 */
 	public int compareTo(Jar jar) {
 
@@ -133,6 +134,18 @@ public class Jar {
 			return 1;
 		} else if(objContainsSrc) {
 			return -1;
+		}
+		
+		for(String method : objMethods) {
+			if(srcMethods.contains(method)) {
+				return 2;
+			}
+		}
+		
+		for(String field : objFields) {
+			if(srcFields.contains(field)) {
+				return 2;
+			}
 		}
 		
 		return 4;

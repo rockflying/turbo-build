@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.turbo.build.graph.Graph;
 import com.turbo.build.opt.ClassPathParser;
 import com.turbo.build.util.Jar;
 import com.turbo.build.util.JarUtil;
@@ -39,9 +38,10 @@ public class Test {
 //			System.out.println(list);
 		}
 		
-		Graph g = new Graph(util.findConflictJars());
-		System.out.println(g);
-//		
+		List<Jar[]> jars = util.findConflictJars();
+		for(Jar[] jar : jars) {
+			System.out.println(jar[0].getFullname() + " | " + jar[1].getFullname());
+		}
 //		List<ClasspathEntry> entries = parser.getEntries();
 //		for(ClasspathEntry entry : entries) {
 //			System.out.println(entry.element.getAttributeValue("path"));
