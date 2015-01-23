@@ -3,8 +3,6 @@ package com.turbo.build.test;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.bcel.classfile.Method;
-
 import com.turbo.build.opt.ClassPathParser;
 import com.turbo.build.util.Clazz;
 import com.turbo.build.util.Jar;
@@ -29,8 +27,12 @@ public class TestClazz {
 				Clazz clazz = map.get(iter.next());
 				clist[n++] = clazz;
 				System.out.println(clazz);
-				for(Method m : clazz.getMethods()) {
-					System.out.println("\t" + m.getName());
+				for(String m : clazz.getMethodList()) {
+					System.out.println("\t" + m);
+				}
+				
+				for(String f : clazz.getFieldList()) {
+					System.out.println("\t" + clazz.getName()+"."+f);
 				}
 			}
 		}

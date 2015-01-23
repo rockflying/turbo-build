@@ -77,7 +77,7 @@ public class Clazz {
 	public List<String> getMethodList() {
 		List<String> methodList = new ArrayList<String>();
 		for (Method m : methods) {
-			methodList.add(m.toString());
+			methodList.add(name+":"+m.toString());
 		}
 		return methodList;
 	}
@@ -85,7 +85,7 @@ public class Clazz {
 	public List<String> getFieldList() {
 		List<String> fieldList = new ArrayList<String>();
 		for(Field f : fields) {
-			fieldList.add(f.toString());
+			fieldList.add(name+":"+f.toString());
 		}
 		return fieldList;
 	}
