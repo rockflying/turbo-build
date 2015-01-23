@@ -38,8 +38,8 @@ public class TestGraph {
 			System.out.println();
 		}
 
-		System.out.println(g.topologicalSort().length);
-		for (Vertex v : g.topologicalSort()) {
+		Vertex[] res = g.topologicalSort();
+		for (Vertex v : res) {
 			System.out.println(v.getName());
 		}
 	}

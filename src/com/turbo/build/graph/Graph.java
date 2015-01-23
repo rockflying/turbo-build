@@ -75,6 +75,7 @@ public class Graph {
 	 */
 	private void addEdge(Vertex src, Vertex obj) {
 		vertexSet.add(src);
+		vertexSet.add(obj);
 		ArrayList<Vertex> list = edgeMap.get(src);
 		if (list == null) {
 			list = new ArrayList<Vertex>();
