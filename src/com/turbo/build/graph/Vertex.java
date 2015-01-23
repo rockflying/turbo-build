@@ -29,6 +29,7 @@ public class Vertex {
 	public Vertex(Jar jar) {
 		this.name = jar.getFullname();
 		this.jar  = jar;
+		this.color = Color.WHITE;
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class Vertex {
 		// Override Auto-generated method stub
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((jar == null) ? 0 : jar.hashCode());
+		result = prime * result
+				+ ((jar == null) ? 0 : jar.getPath().hashCode());
 		
 		return result;
 	}
