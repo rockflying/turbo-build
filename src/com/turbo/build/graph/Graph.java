@@ -18,6 +18,8 @@ public class Graph {
 
 	private Map<Vertex, ArrayList<Vertex>> edgeMap = new HashMap<Vertex, ArrayList<Vertex>>();
 	
+	boolean hasCicle = false;
+	
 //	public Map<String, ArrayList<Jar>> getConfMap() {
 //		return confMap;
 //	}
@@ -175,5 +177,40 @@ public class Graph {
 
 		vertex.color = Color.BLACK;
 		sortedList.addLast(vertex);
+	}
+	
+	public boolean checkCircles() {
+		if(hasCicle) {
+			return true;
+		}
+		
+		Set<Vertex> vertexSet = getVertexSet();
+		Set<Vertex> set = new HashSet<Vertex>();
+
+		for (Vertex v : vertexSet) {
+			set.clear();
+			deepTraverse(v, set);
+			if (hasCicle) {
+				break;
+			}
+		}
+		return hasCicle;
+	}
+
+	private void deepTraverse(Vertex vertex, Set<Vertex> set) {
+		Map<Vertex, ArrayList<Vertex>> edgeMap = getEdgeMap();
+		ArrayList<Vertex> adjacencys = edgeMap.get(vertex);
+		set.add(vertex);
+
+		if (adjacencys != null && adjacencys.size() > 0) {
+			for (Vertex adjacency : adjacencys) {
+				if (set.contains(adjacency)) {
+					hasCicle = true;
+					return;
+				}
+				deepTraverse(adjacency, set);
+			}
+		}
+		set.remove(vertex);
 	}
 }
