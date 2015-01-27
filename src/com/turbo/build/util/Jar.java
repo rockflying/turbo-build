@@ -109,6 +109,9 @@ public class Jar {
 		iter = srcClazzes.keySet().iterator();
 		while (iter.hasNext()) {
 			String key = iter.next();
+			if (!objClazzes.containsKey(key)) {
+				continue;
+			}
 			Clazz srcClazz = srcClazzes.get(key);
 			srcMethods.addAll(srcClazz.getMethodList());
 			srcFields.addAll(srcClazz.getFieldList());
@@ -117,6 +120,9 @@ public class Jar {
 		iter = objClazzes.keySet().iterator();
 		while (iter.hasNext()) {
 			String key = iter.next();
+			if (!srcClazzes.containsKey(key)) {
+				continue;
+			}
 			Clazz objClazz = objClazzes.get(key);
 			objMethods.addAll(objClazz.getMethodList());
 			objFields.addAll(objClazz.getFieldList());

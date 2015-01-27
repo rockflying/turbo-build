@@ -12,7 +12,7 @@ public class TestGraph {
 	public static void main(String[] args) {
 
 		ClassPathParser parser = new ClassPathParser(
-				"test-cases\\case2\\App\\.classpath");
+				"test-cases\\case4\\YellowBook2\\.classpath");
 
 		parser.extractJars();
 
@@ -37,7 +37,7 @@ public class TestGraph {
 			}
 			System.out.println();
 		}
-
+		System.out.println("-----------");
 		Vertex[] res = g.topologicalSort();
 		for (Vertex v : res) {
 			System.out.println(v.getName());
