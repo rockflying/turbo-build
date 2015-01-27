@@ -12,7 +12,7 @@ public class TestGraph {
 	public static void main(String[] args) {
 
 		ClassPathParser parser = new ClassPathParser(
-				"test-cases\\case3\\App\\.classpath");
+				"test-cases\\case2\\App\\.classpath");
 
 		parser.extractJars();
 
@@ -42,5 +42,7 @@ public class TestGraph {
 		for (Vertex v : res) {
 			System.out.println(v.getName());
 		}
+		
+		System.out.println(g.checkCircles());
 	}
 }
