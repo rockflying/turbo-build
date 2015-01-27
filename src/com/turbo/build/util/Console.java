@@ -40,6 +40,19 @@ public class Console {
 		}
 	}
 	
+	public static void print(String msg) {
+		MessageConsoleStream printer = console.newMessageStream();
+		printer.setActivateOnWrite(true);
+		printer.print(msg);
+		try {
+			printer.flush();
+			printer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void println(String msg, Color color) {
 		MessageConsoleStream printer = console.newMessageStream();
 		printer.setColor(color);

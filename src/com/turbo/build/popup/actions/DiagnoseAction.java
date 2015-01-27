@@ -2,13 +2,18 @@ package com.turbo.build.popup.actions;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
+import com.turbo.build.graph.Graph;
+import com.turbo.build.graph.Vertex;
 import com.turbo.build.opt.ClassPathParser;
 import com.turbo.build.util.ClassListLoader;
 import com.turbo.build.util.Console;
+import com.turbo.build.util.Jar;
+import com.turbo.build.util.JarUtil;
 import com.turbo.build.util.ProjectInfo;
 
 public class DiagnoseAction implements IObjectActionDelegate {
@@ -37,38 +42,41 @@ public class DiagnoseAction implements IObjectActionDelegate {
 		Console.clearConsole();
 		ClassListLoader loader = new ClassListLoader();
 		loader.loadClassList();
-		for(String clazz : loader.getClazzList()) {
-			Console.println(clazz);			
-		}
+//		for(String clazz : loader.getClazzList()) {
+//			Console.println(clazz);			
+//		}
 		
 		ClassPathParser parser = new ClassPathParser(ProjectInfo.classpath);
 		parser.extractJars();
-//		CallGraph.buildCallGraphFromClasses(loader.getClazzList());
-//
-//
-//
-//		
-//		CallGraph.buildCallGraphFromJars(jutil.getJars());
-//		// TODO delete
-//		for (IMethod m : CallGraph.getMethods()) {
-//			Console.println(m);
-//			for (IMethod callee : m.getCallees()) {
-//				Console.println("\t" + callee);
-//			}
+		
+		JarUtil util = new JarUtil(parser.getEntries());
+
+//		List<Jar[]> jars = util.findConflictJars();
+//		for (Jar[] jar : jars) {
+//			Console.println(jar[0].getFullname() + " | "
+//					+ jar[1].getFullname());
 //		}
-//		
-//		JarUtil jutil = new JarUtil(parser.getEntries());
-//		for(Jar jar : jutil.getJars()) {
-//			Map<String, Clazz> map = jar.getClazzes();
-//			Iterator<String> iter = map.keySet().iterator();
-//			while(iter.hasNext()) {
-//				Clazz clazz = map.get(iter.next());
-//				Console.println(clazz);
-//				for(Method m : clazz.getMethods()) {
-//					Console.println("\t"+m.getName());
-//				}
-//			}
-//		}
+
+		Graph g = new Graph(util.findConflictJars());
+		Console.println("Possible conflict jars:", new Color(null, 255, 0, 0));
+		for (Vertex key : g.getEdgeMap().keySet()) {
+			Console.println(key.getName());
+			for (Vertex v : g.getEdgeMap().get(key)) {
+				Console.print("  >>>" + v.getName() + " ");
+			}
+			Console.println("");
+		}
+		
+		Console.println("\nOriginal jar order:", new Color(null, 255, 0, 0));
+		for(Jar jar : util.getJars() ) {
+			Console.println(jar.getFullname());
+		}
+		
+		Vertex[] res = g.topologicalSort();
+		Console.println("\nBest order to solve possible conflicts:", new Color(null, 255, 0, 0));
+		for (Vertex v : res) {
+			Console.println(v.getName());
+		}
 	}
 
 	/**
